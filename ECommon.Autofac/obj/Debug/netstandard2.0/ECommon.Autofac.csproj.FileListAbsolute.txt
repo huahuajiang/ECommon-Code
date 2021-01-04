@@ -1,0 +1,4 @@
+E:\VSWork\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.dll
+E:\VSWork\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.csprojAssemblyReference.cache
+E:\VSWork\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.AssemblyInfoInputs.cache
+E:\VSWork\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.AssemblyInfo.cs
