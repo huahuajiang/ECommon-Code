@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ECommon.Autofac
 {
-    class ConfigurationExtensions
+    public static class ConfigurationExtensions
     {
+        public static Configuration
     }
 }
