@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ECommon.ILogger
+namespace ECommon.Logging
 {
     public class EmptyLoggerFactory : ILoggerFactory
     {
