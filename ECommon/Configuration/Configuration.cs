@@ -1,6 +1,8 @@
 ﻿using ECommon.Components;
-using ECommon.ILogger;
+using ECommon.Logging;
+using ECommon.Scheduling;
 using ECommon.Serializing;
+using ECommon.Socketing.Framing;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,6 +42,8 @@ namespace ECommon.Configuration
             SetDefault<ILoggerFactory, EmptyLoggerFactory>();
             SetDefault<IBinarySerializer, DefaultBinarySerializer>();
             SetDefault<IJsonSerializer, NotImplementedJsonSerializer>();
+            SetDefault<IScheduleService, ScheduleService>(null, LifeStyle.Transient);
+            SetDefault<IMessageFramer, LengthPrefixMessageFramer>(null, LifeStyle.Transient);
         }
     }
 }

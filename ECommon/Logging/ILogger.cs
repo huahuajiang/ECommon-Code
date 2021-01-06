@@ -18,7 +18,7 @@ namespace ECommon.Logging
 
         void Error(string message);
 
-        void ErrorFoemat(string format, params object[] args);
+        void ErrorFormat(string format, params object[] args);
 
         void Error(string message, Exception exception);
 

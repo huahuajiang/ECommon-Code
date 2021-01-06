@@ -1,11 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "R5o0U8fVeyru9oQAQ3DJmVfUekPCAGihwSZrULfH2vfgozr9BNoFvfXOuYB5pZ0mBOXuUq9sD4w2imZuP4FzXQ==",
+  "dgSpecHash": "H0cj1oHJ05Jke5Cll8P6lX51eegtSueCWWpUfAs7gXm3TaEcNuUF795LJfVu9nuVMLHURqcZxihb/3TtrWlgqw==",
   "success": true,
-  "projectFilePath": "E:\\My VS Work\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj",
+  "projectFilePath": "E:\\VSWork\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\98092\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\98092\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\autofac\\5.2.0\\autofac.5.2.0.nupkg.sha512",
+    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
+    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
+    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.2\\system.threading.tasks.extensions.4.5.2.nupkg.sha512"
   ],
   "logs": []
 }
