@@ -72,12 +72,26 @@ namespace ECommon.Utilities
 
         public void Start()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(_taskName))
+            {
+                throw new Exception(string.Format("Please initialize the {0} before start it.", GetType().FullName));
+            }
+            _scheduleService.StartTask(_taskName, () =>
+            {
+                foreach (var entry in _countInfoDict)
+                {
+                    entry.Value.Calculate();
+                }
+            }, _setting.StatIntervalSeconds * 1000, _setting.StatIntervalSeconds * 1000);
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(_taskName))
+            {
+                return;
+            }
+            _scheduleService.StopTask(_taskName);
         }
 
         public void UpdateKeyCount(string key, long count, double rtMilliseconds)
@@ -148,6 +162,72 @@ namespace ECommon.Utilities
                 _rtCount = count;
                 Interlocked.Add(ref _rtTime, (long)(rtMilliseconds * 1000));
                 Interlocked.Add(ref _totalRTTime, (long)(rtMilliseconds * 1000));
+            }
+
+            public void Calculate()
+            {
+                CalculateThroughput();
+                CalculateRT();
+
+                if (_service._setting.AutoLogging)
+                {
+                    var contextText = string.Empty;
+                    if (_service._setting.GetLogContextTextFunc != null)
+                    {
+                        contextText = _service._setting.GetLogContextTextFunc();
+                    }
+                    if (!string.IsNullOrWhiteSpace(contextText))
+                    {
+                        contextText += ", ";
+                    }
+                    _service._logger.InfoFormat("{0}, {1}totalCount: {2}, throughput: {3}, averageThrughput: {4}, rt: {5:F3}ms, averageRT: {6:F3}ms", _service._name, contextText, _totalCount, _throughput, _averageThroughput, _rt, _averateRT);
+                }
+                if (_service._setting.PerformanceInfoHandler != null)
+                {
+                    try
+                    {
+                        _service._setting.PerformanceInfoHandler(GetCurrentPerformanceInfo());
+                    }
+                    catch(Exception ex)
+                    {
+                        _service._logger.Error("PerformanceInfo handler execution has exception.", ex);
+                    }
+                }
+            }
+
+            public PerformanceInfo GetCurrentPerformanceInfo()
+            {
+                return new PerformanceInfo(TotalCount, Throughput, AverageThroughput, RT, AverageRT);
+            }
+
+            private void CalculateThroughput()
+            {
+                var totalCount = _totalCount;
+                _throughput = totalCount - _previousCount;
+                _previousCount = totalCount;
+
+                if (_throughput > 0)
+                {
+                    _throughputCalculateCount++;
+                    _averageThroughput = totalCount / _throughputCalculateCount;
+                }
+            }
+
+            private void CalculateRT()
+            {
+                var rtCount = _rtCount;
+                var rtTime = _rtTime;
+                var totalRTTime = _totalRTTime;
+
+                if (rtCount > 0)
+                {
+                    _rt = ((double)rtTime / 1000) / rtCount;
+                    _rtCalculateCount += rtCount;
+                    _averateRT = ((double)totalRTTime / 1000) / _rtCalculateCount;
+                }
+
+                _rtCount = 0L;
+                _rtTime = 0L;
             }
         }
     }
