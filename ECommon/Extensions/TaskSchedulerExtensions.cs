@@ -21,6 +21,7 @@ namespace ECommon.Extensions
                 return new Task(() => { }, factory.CancellationToken);
             }
 
+            //TaskCompletionSource<T>这是一种受你控制创建Task的方式。你可以使Task在任何你想要的时候完成，你也可以在任何地方给它一个异常让它失败。
             var tcs = new TaskCompletionSource<object>(factory.CreationOptions);
             //之所以会用到default关键字，是因为需要在不知道类型参数为值类型还是引用类型的情况下，为对象实例赋初
             var ctr = default(CancellationTokenRegistration);
@@ -31,6 +32,7 @@ namespace ECommon.Extensions
                 //清除取消令牌和计时器，并尝试转换到“已完成”
                 ctr.Dispose();
                 ((Timer)self).Dispose();
+                //成功
                 tcs.TrySetResult(null);
             });
 
@@ -41,6 +43,7 @@ namespace ECommon.Extensions
                  ctr = factory.CancellationToken.Register(() =>
                 {
                     timer.Dispose();
+                    //失败
                     tcs.TrySetCanceled();
                 });
             }

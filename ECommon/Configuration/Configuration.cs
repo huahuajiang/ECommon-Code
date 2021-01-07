@@ -1,4 +1,5 @@
 ﻿using ECommon.Components;
+using ECommon.IO;
 using ECommon.Logging;
 using ECommon.Scheduling;
 using ECommon.Serializing;
@@ -44,6 +45,7 @@ namespace ECommon.Configuration
             SetDefault<IJsonSerializer, NotImplementedJsonSerializer>();
             SetDefault<IScheduleService, ScheduleService>(null, LifeStyle.Transient);
             SetDefault<IMessageFramer, LengthPrefixMessageFramer>(null, LifeStyle.Transient);
+            SetDefault<IOHelper, IOHelper>();
         }
     }
 }
