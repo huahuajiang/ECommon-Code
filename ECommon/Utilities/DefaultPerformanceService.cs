@@ -2,8 +2,6 @@
 using ECommon.Scheduling;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace ECommon.Utilities
@@ -37,12 +35,27 @@ namespace ECommon.Utilities
 
         public PerformanceInfo GetKeyPerformanceInfo(string key)
         {
-            throw new NotImplementedException();
+            CountInfo countInfo;
+            if(_countInfoDict.TryGetValue(key,out countInfo))
+            {
+                return countInfo.GetCurrentPerformanceInfo();
+            }
+            return null;
         }
 
+        //增
         public void IncrementKeyCount(string key, double rtMilliseconds)
         {
-            throw new NotImplementedException();
+            _countInfoDict.AddOrUpdate(key,
+                x =>
+                {
+                    return new CountInfo(this, 1, rtMilliseconds);
+                },
+                (x, y) =>
+                {
+                    y.IncrementTotalCount(rtMilliseconds);
+                    return y;
+                });
         }
 
         public IPerformanceService Initialize(string name, PerformanceServiceSetting setting = null)
@@ -96,7 +109,17 @@ namespace ECommon.Utilities
 
         public void UpdateKeyCount(string key, long count, double rtMilliseconds)
         {
-            throw new NotImplementedException();
+            //如果该键已经存在，则更新 ConcurrentDictionary<TKey,TValue> 中的键/值对
+            _countInfoDict.AddOrUpdate(key,
+                x =>
+                {
+                    return new CountInfo(this, count, rtMilliseconds);
+                },
+                (x, y) =>
+                {
+                    y.UpdateTotalCount(count, rtMilliseconds);
+                    return y;
+                });
         }
 
 

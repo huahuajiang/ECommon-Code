@@ -96,9 +96,4 @@ namespace ECommon.Components
         bool TryResolveNamed(string serviceName, Type serviceType, out object instance);
     }
 
-    public enum LifeStyle
-    {
-        Transient,//短暂
-        Singleton//单例
-    }
 }

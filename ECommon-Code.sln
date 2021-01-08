@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommon", "ECommon\ECommon.csproj", "{E9E242DA-33A5-4ABE-9694-5AC4F6482A58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommon", "ECommon\ECommon.csproj", "{E9E242DA-33A5-4ABE-9694-5AC4F6482A58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommon.Autofac", "ECommon.Autofac\ECommon.Autofac.csproj", "{E4648DB1-CFFB-417B-B066-1BC275735F1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommon.Autofac", "ECommon.Autofac\ECommon.Autofac.csproj", "{E4648DB1-CFFB-417B-B066-1BC275735F1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommon.Dapper", "ECommon.Dapper\ECommon.Dapper.csproj", "{A28AD622-F4E5-42F5-B8A4-196D9EF5C3EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E4648DB1-CFFB-417B-B066-1BC275735F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4648DB1-CFFB-417B-B066-1BC275735F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4648DB1-CFFB-417B-B066-1BC275735F1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A28AD622-F4E5-42F5-B8A4-196D9EF5C3EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28AD622-F4E5-42F5-B8A4-196D9EF5C3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A28AD622-F4E5-42F5-B8A4-196D9EF5C3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A28AD622-F4E5-42F5-B8A4-196D9EF5C3EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

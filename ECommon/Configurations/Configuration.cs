@@ -4,11 +4,10 @@ using ECommon.Logging;
 using ECommon.Scheduling;
 using ECommon.Serializing;
 using ECommon.Socketing.Framing;
+using ECommon.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ECommon.Configuration
+namespace ECommon.Configurations
 {
     public class Configuration
     {
@@ -46,6 +45,31 @@ namespace ECommon.Configuration
             SetDefault<IScheduleService, ScheduleService>(null, LifeStyle.Transient);
             SetDefault<IMessageFramer, LengthPrefixMessageFramer>(null, LifeStyle.Transient);
             SetDefault<IOHelper, IOHelper>();
+            SetDefault<IPerformanceService, DefaultPerformanceService>(null, LifeStyle.Transient);
+            return this;
+        }
+
+        public Configuration RegisterUnhandlerExceptionHandler()
+        {
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+            {
+                var loggerFactory = ObjectContainer.Resolve<ILoggerFactory>();
+                if (loggerFactory != null)
+                {
+                    var logger = loggerFactory.Create(GetType().FullName);
+                    if (logger != null)
+                    {
+                        logger.ErrorFormat("Unhandled exception: {0}", e.ExceptionObject);
+                    }
+                }
+            };
+            return this;
+        }
+
+        public Configuration BuildContainer()
+        {
+            ObjectContainer.Build();
+            return this;
         }
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\VSWork\\ECommon-Code\\ECommon\\ECommon.csproj": {}
+    "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj": {}
   },
   "projects": {
-    "E:\\VSWork\\ECommon-Code\\ECommon\\ECommon.csproj": {
+    "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\VSWork\\ECommon-Code\\ECommon\\ECommon.csproj",
-        "projectName": "ECommon",
-        "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon\\ECommon.csproj",
+        "projectUniqueName": "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj",
+        "projectName": "ECommon.Dapper",
+        "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj",
         "packagesPath": "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\",
-        "outputPath": "E:\\VSWork\\ECommon-Code\\ECommon\\obj\\",
+        "outputPath": "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\LIUJUNHUA\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.30, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",

@@ -2,7 +2,6 @@
 using ECommon.Logging;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ECommon.Socketing.Framing
 {
