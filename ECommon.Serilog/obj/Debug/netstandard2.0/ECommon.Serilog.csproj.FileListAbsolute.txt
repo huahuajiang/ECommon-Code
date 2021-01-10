@@ -1,0 +1,4 @@
+E:\My VS Work\ECommon-Code\ECommon.Serilog\bin\Debug\netstandard2.0\ECommon.dll
+E:\My VS Work\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.AssemblyInfoInputs.cache
+E:\My VS Work\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.AssemblyInfo.cs
+E:\My VS Work\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.csprojAssemblyReference.cache

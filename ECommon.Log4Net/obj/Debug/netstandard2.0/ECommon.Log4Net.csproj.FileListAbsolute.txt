@@ -1,0 +1,5 @@
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\bin\Debug\netstandard2.0\ECommon.Log4Net.deps.json
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\bin\Debug\netstandard2.0\ECommon.Log4Net.dll
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.csprojAssemblyReference.cache
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.AssemblyInfoInputs.cache
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.AssemblyInfo.cs

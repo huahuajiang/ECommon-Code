@@ -16,6 +16,8 @@ namespace ECommon.Logging
 
         void InfoFormat(string format, params object[] args);
 
+        void Info(string message, Exception exception);
+
         void Error(string message);
 
         void ErrorFormat(string format, params object[] args);
