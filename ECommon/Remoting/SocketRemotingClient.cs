@@ -1,6 +1,7 @@
 ﻿using ECommon.Logging;
 using ECommon.Scheduling;
 using ECommon.Socketing;
+using ECommon.Socketing.BufferManagement;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
