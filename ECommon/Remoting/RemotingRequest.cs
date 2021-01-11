@@ -1,12 +1,15 @@
-﻿using System;
+﻿using ECommon.Utilities;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace ECommon.Remoting
 {
     public class RemotingRequest
     {
-        private string Id { get; set; }
-        private short Type { get; set; }
+        private static long _sequence;
+        public string Id { get; set; }
+        public short Type { get; set; }
         public short Code { get; set; }
         public long Sequence { get; set; }
         public byte[] Body { get; set; }

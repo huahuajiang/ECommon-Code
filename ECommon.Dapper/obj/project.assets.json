@@ -345,19 +345,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\98092\\.nuget\\packages\\": {}
+    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\My VS Work\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj",
+      "projectUniqueName": "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj",
       "projectName": "ECommon.Dapper",
-      "projectPath": "E:\\My VS Work\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj",
-      "packagesPath": "C:\\Users\\98092\\.nuget\\packages\\",
-      "outputPath": "E:\\My VS Work\\ECommon-Code\\ECommon.Dapper\\obj\\",
+      "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj",
+      "packagesPath": "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\",
+      "outputPath": "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\98092\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LIUJUNHUA\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -369,6 +369,7 @@
       },
       "frameworks": {
         "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "projectReferences": {}
         }
       },
@@ -380,6 +381,7 @@
     },
     "frameworks": {
       "netstandard2.0": {
+        "targetAlias": "netstandard2.0",
         "dependencies": {
           "Dapper": {
             "target": "Package",
@@ -402,7 +404,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
