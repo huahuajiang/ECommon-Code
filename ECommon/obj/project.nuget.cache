@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "yzVWM/NokKPHfoRvnEno2ECmanhW8ncDHkSaiVUPgBUe+usJv9xsEjXFjwRmr51yzlmmfPZs4MIwD9Qp/c2DFg==",
+  "dgSpecHash": "PNMvX1qWVxT9uA1szq+1vKcQrIPhoXSgdAtPW1euk8w1YS1jQrVzfjqQRAT6wDW85B+qx855w97fTCc8Me1E6w==",
   "success": true,
-  "projectFilePath": "E:\\VSWork\\ECommon-Code\\ECommon\\ECommon.csproj",
+  "projectFilePath": "E:\\My VS Work\\ECommon-Code\\ECommon\\ECommon.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\98092\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\98092\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
   ],
   "logs": []
 }

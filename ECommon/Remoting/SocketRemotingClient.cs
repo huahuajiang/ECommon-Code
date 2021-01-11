@@ -101,8 +101,52 @@ namespace ECommon.Remoting
                 throw new ResponseFutureAddFailedException(request.Sequence);
             }
 
-            ClientSocket.QueueMessage()
-            
+            ClientSocket.QueueMessage(RemotingUtil.BuildRequestMessage(request));
+            return taskCompletionSource.Task;
+        }
+
+        public void InvokeWithCallback(RemotingRequest request)
+        {
+            EnsureClientStatus();
+
+            request.Type = RemotingRequestType.Callback;
+            ClientSocket.QueueMessage(RemotingUtil.BuildRequestMessage(request));
+        }
+
+        public void InvokeOneway(RemotingRequest request)
+        {
+            EnsureClientStatus();
+
+            request.Type = RemotingRequestType.Oneway;
+            ClientSocket.QueueMessage(RemotingUtil.BuildRequestMessage(request));
+        }
+
+        private void HandleServerMessage(ITcpConnection connection, byte[] message)
+        {
+            if (message == null) return;
+
+            var remotingServerMessage = RemotingUtil.ParseRemotingServerMessage(message);
+
+            if (remotingServerMessage.Type == RemotingServerMessageType.RemotingResponse)
+            {
+                HandleResponseMessage(connection, remotingServerMessage.Body);
+            }
+            else if (remotingServerMessage.Type == RemotingServerMessageType.ServerMessage)
+            {
+                HandleServerPushMessage(connection, remotingServerMessage);
+            }
+        }
+
+        private void HandleResponseMessage(ITcpConnection connection,byte[] message)
+        {
+            if (message == null) return;
+
+            var remotingResponse = RemotingUtil.ParseResponse(message);
+
+            if (remotingResponse.RequestType == RemotingRequestType.Callback)
+            {
+
+            }
         }
 
         private void EnsureClientStatus()
