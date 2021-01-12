@@ -9,6 +9,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -67,6 +68,12 @@ namespace ECommon.Remoting
         public SocketRemotingClient RegisterResponseHandler(int requestCode, IResponseHandler responseHandler)
         {
             _responseHandlerDict[requestCode] = responseHandler;
+            return this;
+        }
+
+        public SocketRemotingClient RegisterRemotingServerMessageHandler(int messageCode, IRemotingServerMessageHandler messageHandler)
+        {
+            _remotingServerMessageHandlerDict[messageCode] = messageHandler;
             return this;
         }
 
@@ -145,8 +152,141 @@ namespace ECommon.Remoting
 
             if (remotingResponse.RequestType == RemotingRequestType.Callback)
             {
-
+                if(_responseHandlerDict.TryGetValue(remotingResponse.RequestCode,out IResponseHandler responseHandler))
+                {
+                    responseHandler.HandleResponse(remotingResponse);
+                }
+                else
+                {
+                    _logger.ErrorFormat("No response handler found for remoting response, name: {0}, response: {1}", Name, remotingResponse);
+                }
             }
+            else if (remotingResponse.RequestType == RemotingRequestType.Async)
+            {
+                if (_responseFutureDict.TryRemove(remotingResponse.RequestSequence, out ResponseFuture responseFuture))
+                {
+                    if (responseFuture.SetResponse(remotingResponse))
+                    {
+                        if (_logger.IsDebugEnabled)
+                        {
+                            _logger.DebugFormat("Remoting response back, name: {0}, request code: {1}, requect sequence: {2}, time spent: {3}", Name, responseFuture.Request.Code, responseFuture.Request.Sequence, (DateTime.Now - responseFuture.BeginTime).TotalMilliseconds);
+                        }
+                    }
+                    else
+                    {
+                        _logger.ErrorFormat("Set remoting response failed, name: {0}, response: {1}", Name, remotingResponse);
+                    }
+                }
+            }
+        }
+
+        private void HandleServerPushMessage(ITcpConnection connection, RemotingServerMessage message)
+        {
+            if (_remotingServerMessageHandlerDict.TryGetValue(message.Code, out IRemotingServerMessageHandler messageHandler))
+            {
+                messageHandler.HandleMessage(message);
+            }
+            else
+            {
+                _logger.ErrorFormat("No handler found for remoting server push message, name: {0}, message: {1}", Name, message);
+            }
+        }
+
+        //Scan:扫描
+        private void ScanTimeoutRequest()
+        {
+            var timeoutKeyList = new List<long>();
+            foreach(var entry in _responseFutureDict)
+            {
+                if (entry.Value.IsTimeout())
+                {
+                    timeoutKeyList.Add(entry.Key);
+                }
+            }
+            foreach(var key in timeoutKeyList)
+            {
+                if(_responseFutureDict.TryRemove(key,out ResponseFuture responseFuture))
+                {
+                    var request = responseFuture.Request;
+                    responseFuture.SetResponse(new RemotingResponse(
+                        request.Type,
+                        request.Code,
+                        request.Sequence,
+                        request.CreatedTime,
+                        0,
+                        TimeoutMessage,
+                        DateTime.Now,
+                        request.Header,
+                        null
+                    ));
+                    if (_logger.IsDebugEnabled)
+                    {
+                        _logger.DebugFormat("Removed timeout request, name: {0}, request: {1}", Name, responseFuture.Request);
+                    }
+                }
+            }
+
+        }
+
+        private void ReconnectServer()
+        {
+            _logger.InfoFormat("Try to reconnect to server, name: {0}, serverAddress: {1}", Name, ServerEndPoint);
+
+            if (ClientSocket.IsConnected) return;
+            if (!EnterReconnecting()) return;
+
+            try
+            {
+                ClientSocket.Shutdown();
+                ClientSocket = new ClientSocket(ClientSocket.Name, ServerEndPoint, LocalEndPoint, _setting, BufferPool, HandleServerMessage);
+                foreach(var listener in _connectionEventListeners)
+                {
+                    ClientSocket.RegisterConnectionEventListener(listener);
+                }
+                ClientSocket.Start();
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(string.Format("Reconnect to server has exception, name: {0}, serverAddress: {1}", Name, ServerEndPoint), ex);
+            }
+            finally
+            {
+                ExitReconnecting();
+            }
+        }
+
+        private void StartClientSocket()
+        {
+            ClientSocket.Start();
+        }
+
+        private void ShutdownClientSocket()
+        {
+            ClientSocket.Shutdown();
+        }
+
+        private void StartScanTimeoutRequestTask()
+        {
+            _scheduleService.StartTask(string.Format("{0}.{1}.ScanTimeoutRequest", Name, GetType().Name), ScanTimeoutRequest, 1000, _setting.ScanTimeoutRequestInterval);
+        }
+
+        public void StopScanTimeoutRequestTask()
+        {
+            _scheduleService.StopTask(string.Format("{0}.{1}.ScanTimeoutRequest", Name, GetType().Name));
+        }
+
+        private void StartReconnectServerTask()
+        {
+            _scheduleService.StartTask(string.Format("{0}.{1}.ReconnectServer", Name, GetType().Name), () => ReconnectServer(), 1000, _setting.ReconnectToServerInterval);
+        }
+        private void StopReconnectServerTask()
+        {
+            _scheduleService.StopTask(string.Format("{0}.{1}.ReconnectServer", Name, GetType().Name));
+        }
+
+        private bool EnterReconnecting()
+        {
+            return Interlocked.CompareExchange(ref _reconnecting, 1, 0) == 0;
         }
 
         private void EnsureClientStatus()
@@ -163,6 +303,43 @@ namespace ECommon.Remoting
         private void SetLocalEndPoint(EndPoint localEndPoint)
         {
             LocalEndPoint = localEndPoint;
+        }
+
+        class ConnectionEventListener : IConnectionEventListener
+        {
+            private readonly SocketRemotingClient _remotingClient;
+
+            public ConnectionEventListener(SocketRemotingClient remotingClient)
+            {
+                _remotingClient = remotingClient;
+            }
+
+            public void OnConnectionAccepted(ITcpConnection connection)
+            {
+            }
+
+            public void OnConnectionClosed(ITcpConnection connection, SocketError socketError)
+            {
+                if (_remotingClient._shutteddown || socketError == SocketError.Success) return;
+
+                _remotingClient.ExitReconnecting();
+                _remotingClient.StartReconnectServerTask();
+            }
+
+            public void OnConnectionEstablished(ITcpConnection connection)
+            {
+                _remotingClient.StopReconnectServerTask();
+                _remotingClient.ExitReconnecting();
+                _remotingClient.SetLocalEndPoint(connection.LocalEndPoint);
+            }
+
+            public void OnConnectionFailed(EndPoint remotingEndPoint, SocketError socketError)
+            {
+                if (_remotingClient._shutteddown) return;
+
+                _remotingClient.ExitReconnecting();
+                _remotingClient.StartReconnectServerTask();
+            }
         }
     }
 }

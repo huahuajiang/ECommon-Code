@@ -39,6 +39,11 @@ namespace ECommon.Logging
             
         }
 
+        public void ErrorFormat(string format, params object[] args)
+        {
+            
+        }
+
         public void Fatal(string message)
         {
             
@@ -57,6 +62,11 @@ namespace ECommon.Logging
         public void Info(string message)
         {
             
+        }
+
+        public void Info(string message, Exception exception)
+        {
+
         }
 
         public void InfoFormat(string format, params object[] args)

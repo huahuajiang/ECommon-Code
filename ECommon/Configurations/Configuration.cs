@@ -49,7 +49,7 @@ namespace ECommon.Configurations
             return this;
         }
 
-        public Configuration RegisterUnhandlerExceptionHandler()
+        public Configuration RegisterUnhandledExceptionHandler()
         {
             AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
             {

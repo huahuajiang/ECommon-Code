@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommon.Dapper", "ECommon.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommon.JsonNet", "ECommon.JsonNet\ECommon.JsonNet.csproj", "{D0657043-711C-45EF-B3C4-E76CF9BFCC0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommon.Log4Net", "ECommon.Log4Net\ECommon.Log4Net.csproj", "{29413F04-D6E9-4718-8D14-6D26B39D906A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommon.Log4Net", "ECommon.Log4Net\ECommon.Log4Net.csproj", "{29413F04-D6E9-4718-8D14-6D26B39D906A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommon.Serilog", "ECommon.Serilog\ECommon.Serilog.csproj", "{281876D8-3078-4448-87C3-594F9CBDF613}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommon.Serilog", "ECommon.Serilog\ECommon.Serilog.csproj", "{281876D8-3078-4448-87C3-594F9CBDF613}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushMessageTestClient", "PushMessageTestClient\PushMessageTestClient.csproj", "{178E27B5-D6BC-49C0-8E77-42B6E9B171F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{281876D8-3078-4448-87C3-594F9CBDF613}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{281876D8-3078-4448-87C3-594F9CBDF613}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{281876D8-3078-4448-87C3-594F9CBDF613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{178E27B5-D6BC-49C0-8E77-42B6E9B171F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{178E27B5-D6BC-49C0-8E77-42B6E9B171F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{178E27B5-D6BC-49C0-8E77-42B6E9B171F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{178E27B5-D6BC-49C0-8E77-42B6E9B171F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
