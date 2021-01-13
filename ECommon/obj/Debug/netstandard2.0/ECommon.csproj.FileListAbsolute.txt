@@ -1,4 +1,8 @@
-E:\My VS Work\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.csprojAssemblyReference.cache
 E:\My VS Work\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.AssemblyInfoInputs.cache
 E:\My VS Work\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.AssemblyInfo.cs
 E:\My VS Work\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.csproj.CoreCompileInputs.cache
+E:\My VS Work\ECommon-Code\ECommon\bin\Debug\netstandard2.0\ECommon.deps.json
+E:\My VS Work\ECommon-Code\ECommon\bin\Debug\netstandard2.0\ECommon.dll
+E:\My VS Work\ECommon-Code\ECommon\bin\Debug\netstandard2.0\ECommon.pdb
+E:\My VS Work\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.dll
+E:\My VS Work\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.pdb

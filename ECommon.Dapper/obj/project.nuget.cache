@@ -1,14 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "pH68okVy+yDvQXMMwiXwImKs5rOx4JJksbYDyVl55M6Vf+otl8+JP7bT1kJdCbTQsoQg7CLyrTrkA/ShDLuTRA==",
+  "dgSpecHash": "PfgiMaBwRaG4kdtP0tiJaaCL9p1hWXrkv6Nwt9nZ74dAu9XGtK4WjCPFxMRQ0PJqyr+SWU0Pa4/iYPPnJk5jLw==",
   "success": true,
-  "projectFilePath": "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj",
+  "projectFilePath": "E:\\My VS Work\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\dapper\\2.0.30\\dapper.2.0.30.nupkg.sha512",
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.6.0\\system.reflection.emit.ilgeneration.4.6.0.nupkg.sha512",
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\system.reflection.emit.lightweight\\4.6.0\\system.reflection.emit.lightweight.4.6.0.nupkg.sha512"
+    "C:\\Users\\98092\\.nuget\\packages\\dapper\\2.0.30\\dapper.2.0.30.nupkg.sha512",
+    "C:\\Users\\98092\\.nuget\\packages\\microsoft.csharp\\4.4.0\\microsoft.csharp.4.4.0.nupkg.sha512",
+    "C:\\Users\\98092\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\98092\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\98092\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.6.0\\system.reflection.emit.ilgeneration.4.6.0.nupkg.sha512",
+    "C:\\Users\\98092\\.nuget\\packages\\system.reflection.emit.lightweight\\4.6.0\\system.reflection.emit.lightweight.4.6.0.nupkg.sha512"
   ],
   "logs": []
 }

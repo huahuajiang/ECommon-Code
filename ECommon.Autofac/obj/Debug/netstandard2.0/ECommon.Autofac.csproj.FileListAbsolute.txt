@@ -6,3 +6,11 @@ E:\My VS Work\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.dll
 E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.csprojAssemblyReference.cache
 E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.AssemblyInfoInputs.cache
 E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.AssemblyInfo.cs
+E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.csproj.CoreCompileInputs.cache
+E:\My VS Work\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.Autofac.deps.json
+E:\My VS Work\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.Autofac.dll
+E:\My VS Work\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.Autofac.pdb
+E:\My VS Work\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.pdb
+E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.csproj.CopyComplete
+E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.dll
+E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.pdb

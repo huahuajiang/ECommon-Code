@@ -42,7 +42,7 @@ namespace ECommon.Socketing.Framing
             }
         }
 
-        public void UnFtameData(ArraySegment<byte> data)
+        public void UnFrameData(ArraySegment<byte> data)
         {
             Parse(data);
         }

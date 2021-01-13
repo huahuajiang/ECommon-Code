@@ -2,3 +2,11 @@ E:\My VS Work\ECommon-Code\ECommon.JsonNet\bin\Debug\netstandard2.0\ECommon.dll
 E:\My VS Work\ECommon-Code\ECommon.JsonNet\obj\Debug\netstandard2.0\ECommon.JsonNet.csprojAssemblyReference.cache
 E:\My VS Work\ECommon-Code\ECommon.JsonNet\obj\Debug\netstandard2.0\ECommon.JsonNet.AssemblyInfoInputs.cache
 E:\My VS Work\ECommon-Code\ECommon.JsonNet\obj\Debug\netstandard2.0\ECommon.JsonNet.AssemblyInfo.cs
+E:\My VS Work\ECommon-Code\ECommon.JsonNet\obj\Debug\netstandard2.0\ECommon.JsonNet.csproj.CoreCompileInputs.cache
+E:\My VS Work\ECommon-Code\ECommon.JsonNet\bin\Debug\netstandard2.0\ECommon.JsonNet.deps.json
+E:\My VS Work\ECommon-Code\ECommon.JsonNet\bin\Debug\netstandard2.0\ECommon.JsonNet.dll
+E:\My VS Work\ECommon-Code\ECommon.JsonNet\bin\Debug\netstandard2.0\ECommon.JsonNet.pdb
+E:\My VS Work\ECommon-Code\ECommon.JsonNet\bin\Debug\netstandard2.0\ECommon.pdb
+E:\My VS Work\ECommon-Code\ECommon.JsonNet\obj\Debug\netstandard2.0\ECommon.JsonNet.csproj.CopyComplete
+E:\My VS Work\ECommon-Code\ECommon.JsonNet\obj\Debug\netstandard2.0\ECommon.JsonNet.dll
+E:\My VS Work\ECommon-Code\ECommon.JsonNet\obj\Debug\netstandard2.0\ECommon.JsonNet.pdb

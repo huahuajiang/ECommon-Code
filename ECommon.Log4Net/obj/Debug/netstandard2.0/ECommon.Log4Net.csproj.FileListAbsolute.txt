@@ -3,3 +3,10 @@ E:\My VS Work\ECommon-Code\ECommon.Log4Net\bin\Debug\netstandard2.0\ECommon.Log4
 E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.csprojAssemblyReference.cache
 E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.AssemblyInfoInputs.cache
 E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.AssemblyInfo.cs
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.csproj.CoreCompileInputs.cache
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\bin\Debug\netstandard2.0\ECommon.Log4Net.pdb
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\bin\Debug\netstandard2.0\ECommon.dll
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\bin\Debug\netstandard2.0\ECommon.pdb
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.csproj.CopyComplete
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.dll
+E:\My VS Work\ECommon-Code\ECommon.Log4Net\obj\Debug\netstandard2.0\ECommon.Log4Net.pdb

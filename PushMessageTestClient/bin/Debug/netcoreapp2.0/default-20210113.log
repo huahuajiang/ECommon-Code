@@ -1,0 +1,33 @@
+2021-01-13 21:54:22.314 [ERR] [ECommon.Socketing.ClientSocket] - Client socket connect failed, name: Client, remotingServerEndPoint: 127.0.0.1:5000, socketError: "ConnectionRefused"
+2021-01-13 22:40:00.572 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:63624
+2021-01-13 22:40:41.049 [INF] [ECommon.Socketing.TcpConnection] - TCP connection closed, name: Client, remoteEndPoint: 127.0.0.1:5000, socketError: "ConnectionReset", reason: Socket receive error, ex: null
+2021-01-13 22:40:42.079 [INF] [ECommon.Remoting.SocketRemotingClient] - Try to reconnect to server, name: Client, serverAddress: 127.0.0.1:5000
+2021-01-13 22:40:44.147 [ERR] [ECommon.Socketing.ClientSocket] - Client socket connect failed, name: Client, remotingServerEndPoint: 127.0.0.1:5000, socketError: "ConnectionRefused"
+2021-01-13 22:40:44.168 [ERR] [ECommon.Remoting.SocketRemotingClient] - Reconnect to server has exception, name: Client, serverAddress: 127.0.0.1:5000
+System.Exception: Client socket connect failed or timeout, name: Client, serverEndPoint: 127.0.0.1:5000
+   at ECommon.Socketing.ClientSocket.Start(Int32 waitMilliseconds) in E:\My VS Work\ECommon-Code\ECommon\Socketing\ClientSocket.cs:line 88
+   at ECommon.Remoting.SocketRemotingClient.ReconnectServer() in E:\My VS Work\ECommon-Code\ECommon\Remoting\SocketRemotingClient.cs:line 246
+2021-01-13 22:40:45.218 [INF] [ECommon.Remoting.SocketRemotingClient] - Try to reconnect to server, name: Client, serverAddress: 127.0.0.1:5000
+2021-01-13 22:46:16.284 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:63710
+2021-01-13 22:50:56.098 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:63727
+2021-01-13 22:56:08.855 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:63764
+2021-01-13 22:56:08.889 [ERR] [ECommon.Configurations.Configuration] - Unhandled exception: System.Exception: Client socket connect failed or timeout, name: Client, serverEndPoint: 127.0.0.1:5000
+   at ECommon.Socketing.ClientSocket.Start(Int32 waitMilliseconds) in E:\My VS Work\ECommon-Code\ECommon\Socketing\ClientSocket.cs:line 88
+   at ECommon.Remoting.SocketRemotingClient.StartClientSocket() in E:\My VS Work\ECommon-Code\ECommon\Remoting\SocketRemotingClient.cs:line 260
+   at ECommon.Remoting.SocketRemotingClient.Start() in E:\My VS Work\ECommon-Code\ECommon\Remoting\SocketRemotingClient.cs:line 91
+   at PushMessageTestClient.Program.InitializeECommon() in E:\My VS Work\ECommon-Code\PushMessageTestClient\Program.cs:line 37
+   at PushMessageTestClient.Program.Main(String[] args) in E:\My VS Work\ECommon-Code\PushMessageTestClient\Program.cs:line 20
+2021-01-13 22:57:10.530 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:63774
+2021-01-13 22:57:10.581 [ERR] [ECommon.Configurations.Configuration] - Unhandled exception: System.Exception: Client socket connect failed or timeout, name: Client, serverEndPoint: 127.0.0.1:5000
+   at ECommon.Socketing.ClientSocket.Start(Int32 waitMilliseconds) in E:\My VS Work\ECommon-Code\ECommon\Socketing\ClientSocket.cs:line 88
+   at ECommon.Remoting.SocketRemotingClient.StartClientSocket() in E:\My VS Work\ECommon-Code\ECommon\Remoting\SocketRemotingClient.cs:line 260
+   at ECommon.Remoting.SocketRemotingClient.Start() in E:\My VS Work\ECommon-Code\ECommon\Remoting\SocketRemotingClient.cs:line 91
+   at PushMessageTestClient.Program.InitializeECommon() in E:\My VS Work\ECommon-Code\PushMessageTestClient\Program.cs:line 37
+   at PushMessageTestClient.Program.Main(String[] args) in E:\My VS Work\ECommon-Code\PushMessageTestClient\Program.cs:line 20
+2021-01-13 23:04:39.526 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:63813
+2021-01-13 23:04:53.367 [ERR] [ECommon.Configurations.Configuration] - Unhandled exception: System.Exception: Client socket connect failed or timeout, name: Client, serverEndPoint: 127.0.0.1:5000
+   at ECommon.Socketing.ClientSocket.Start(Int32 waitMilliseconds) in E:\My VS Work\ECommon-Code\ECommon\Socketing\ClientSocket.cs:line 88
+   at ECommon.Remoting.SocketRemotingClient.StartClientSocket() in E:\My VS Work\ECommon-Code\ECommon\Remoting\SocketRemotingClient.cs:line 260
+   at ECommon.Remoting.SocketRemotingClient.Start() in E:\My VS Work\ECommon-Code\ECommon\Remoting\SocketRemotingClient.cs:line 91
+   at PushMessageTestClient.Program.InitializeECommon() in E:\My VS Work\ECommon-Code\PushMessageTestClient\Program.cs:line 37
+   at PushMessageTestClient.Program.Main(String[] args) in E:\My VS Work\ECommon-Code\PushMessageTestClient\Program.cs:line 20

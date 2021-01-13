@@ -401,19 +401,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\": {}
+    "C:\\Users\\98092\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\VSWork\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj",
+      "projectUniqueName": "E:\\My VS Work\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj",
       "projectName": "ECommon.Autofac",
-      "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj",
-      "packagesPath": "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\",
-      "outputPath": "E:\\VSWork\\ECommon-Code\\ECommon.Autofac\\obj\\",
+      "projectPath": "E:\\My VS Work\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj",
+      "packagesPath": "C:\\Users\\98092\\.nuget\\packages\\",
+      "outputPath": "E:\\My VS Work\\ECommon-Code\\ECommon.Autofac\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\LIUJUNHUA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\98092\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -425,10 +425,9 @@
       },
       "frameworks": {
         "netstandard2.0": {
-          "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "E:\\VSWork\\ECommon-Code\\ECommon\\ECommon.csproj": {
-              "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon\\ECommon.csproj"
+            "E:\\My VS Work\\ECommon-Code\\ECommon\\ECommon.csproj": {
+              "projectPath": "E:\\My VS Work\\ECommon-Code\\ECommon\\ECommon.csproj"
             }
           }
         }
@@ -441,7 +440,6 @@
     },
     "frameworks": {
       "netstandard2.0": {
-        "targetAlias": "netstandard2.0",
         "dependencies": {
           "Autofac": {
             "target": "Package",
@@ -468,7 +466,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

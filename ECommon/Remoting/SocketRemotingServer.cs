@@ -33,6 +33,42 @@ namespace ECommon.Remoting
             _logger = ObjectContainer.Resolve<ILoggerFactory>().Create(name ?? GetType().Name);
         }
 
+        public SocketRemotingServer RegisterConnectionEventListener(IConnectionEventListener listener)
+        {
+            ServerSocket.RegisterConnectionEventListener(listener);
+            return this;
+        }
+        public SocketRemotingServer Start()
+        {
+            _isShuttingdown = false;
+            ServerSocket.Start();
+            return this;
+        }
+        public SocketRemotingServer Shutdown()
+        {
+            _isShuttingdown = true;
+            ServerSocket.Shutdown();
+            return this;
+        }
+        public SocketRemotingServer RegisterRequestHandler(int requestCode, IRequestHandler requestHandler)
+        {
+            _requestHandlerDict[requestCode] = requestHandler;
+            return this;
+        }
+        public void PushMessageToAllConnections(RemotingServerMessage message)
+        {
+            var data = RemotingUtil.BuildRemotingServerMessage(message);
+            ServerSocket.PushMessageToAllConnections(data);
+        }
+        public void PushMessageToConnection(Guid connectionId, byte[] message)
+        {
+            ServerSocket.PushMessageToConnection(connectionId, message);
+        }
+        public IList<ITcpConnection> GetAllConnections()
+        {
+            return ServerSocket.GetAllConnections();
+        }
+
         private void HandleRemotingRequest(ITcpConnection connection, byte[] message, Action<byte[]> sendReplyAction)
         {
             if (_isShuttingdown) return;
@@ -63,7 +99,28 @@ namespace ECommon.Remoting
             try
             {
                 var remotingResponse = requestHandler.HandleRequest(requestHandlerContext, remotingRequest);
-
+                if (remotingRequest.Type != RemotingRequestType.Oneway && remotingResponse != null)
+                {
+                    requestHandlerContext.SendRemotingResponse(remotingResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = string.Format("Unknown exception raised when handling remoting request:{0}, name: {0}, request: {1}", Name, remotingRequest);
+                _logger.Error(errorMessage, ex);
+                if (remotingRequest.Type != RemotingRequestType.Oneway)
+                {
+                    requestHandlerContext.SendRemotingResponse(new RemotingResponse(
+                        remotingRequest.Type,
+                        remotingRequest.Code,
+                        remotingRequest.Sequence,
+                        remotingRequest.CreatedTime,
+                        -1,
+                        Encoding.UTF8.GetBytes(ex.Message),
+                        DateTime.Now,
+                        remotingRequest.Header,
+                        null));
+                }
             }
         }
     }
