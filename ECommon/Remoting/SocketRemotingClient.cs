@@ -130,7 +130,7 @@ namespace ECommon.Remoting
 
         private void HandleServerMessage(ITcpConnection connection, byte[] message)
         {
-            if (message == null) return;
+             if (message == null) return;
 
             var remotingServerMessage = RemotingUtil.ParseRemotingServerMessage(message);
 

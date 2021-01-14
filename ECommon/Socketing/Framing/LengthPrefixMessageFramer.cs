@@ -63,43 +63,43 @@ namespace ECommon.Socketing.Framing
                         }
                         _messageBuffer = new byte[_packageLength];
                     }
-                    else
+                }
+                else
+                {
+                    int copyCnt = Math.Min(bytes.Count + bytes.Offset - i, _packageLength - _bufferIndex);
+                    try
                     {
-                        int copyCnt = Math.Min(bytes.Count + bytes.Offset - i, _packageLength - _bufferIndex);
-                        try
+                        Buffer.BlockCopy(bytes.Array, i, _messageBuffer, _bufferIndex, copyCnt);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(string.Format("Parse message buffer failed, _headerLength: {0}, _packageLength: {1}, _bufferIndex: {2}, copyCnt: {3}, _messageBuffer is null: {4}",
+                        _headerBytes,
+                        _packageLength,
+                        _bufferIndex,
+                        copyCnt,
+                        _messageBuffer == null), ex);
+                        throw;
+                    }
+                    _bufferIndex += copyCnt;
+                    i += copyCnt - 1;
+                    if (_bufferIndex == _packageLength)
+                    {
+                        if (_receivedHandler != null)
                         {
-                            Buffer.BlockCopy(bytes.Array, i, _messageBuffer, _bufferIndex, copyCnt);
-                        }
-                        catch(Exception ex)
-                        {
-                            _logger.Error(string.Format("Parse message buffer failed, _headerLength: {0}, _packageLength: {1}, _bufferIndex: {2}, copyCnt: {3}, _messageBuffer is null: {4}",
-                            _headerBytes,
-                            _packageLength,
-                            _bufferIndex,
-                            copyCnt,
-                            _messageBuffer == null), ex);
-                            throw;
-                        }
-                        _bufferIndex += copyCnt;
-                        i += copyCnt - 1;
-                        if(_bufferIndex == _packageLength)
-                        {
-                            if (_receivedHandler != null)
+                            try
                             {
-                                try
-                                {
-                                    _receivedHandler(new ArraySegment<byte>(_messageBuffer, 0, _bufferIndex));
-                                }
-                                catch (Exception ex)
-                                {
-                                    _logger.Error("Handle received message fail.", ex);
-                                }
+                                _receivedHandler(new ArraySegment<byte>(_messageBuffer, 0, _bufferIndex));
                             }
-                            _messageBuffer = null;
-                            _headerBytes = 0;
-                            _packageLength = 0;
-                            _bufferIndex = 0;
+                            catch (Exception ex)
+                            {
+                                _logger.Error("Handle received message fail.", ex);
+                            }
                         }
+                        _messageBuffer = null;
+                        _headerBytes = 0;
+                        _packageLength = 0;
+                        _bufferIndex = 0;
                     }
                 }
             }

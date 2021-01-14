@@ -11,7 +11,7 @@ namespace ECommon.Socketing.Framing
         //结构体ArraySegment<T> 表示数组的一段，如果需要使用不同的方式去处理一个大型数组的不同部分,一个有效的方法是使用部分数组来代替创建多个数组
         void UnFrameData(IEnumerable<ArraySegment<byte>> data);
 
-        void UnFtameData(ArraySegment<byte> data);
+        void UnFrameData(ArraySegment<byte> data);
 
         IEnumerable<ArraySegment<byte>> FrameData(ArraySegment<byte> data);
 

@@ -198,6 +198,14 @@ namespace ECommon.Socketing
 
             try
             {
+                _receiveSocketArgs.SetBuffer(buffer, 0, buffer.Length);
+                if (_receiveSocketArgs.Buffer == null)
+                {
+                    CloseInternal(SocketError.Shutdown, "Socket receive set buffer failed.", null);
+                    ExitReceiving();
+                    return;
+                }
+
                 bool firedAsync = _receiveSocketArgs.AcceptSocket.ReceiveAsync(_receiveSocketArgs);
                 if (!firedAsync)
                 {
@@ -336,6 +344,8 @@ namespace ECommon.Socketing
             var segments = _framer.FrameData(new ArraySegment<byte>(message, 0, message.Length));
             _sendingQueue.Enqueue(segments);//入队
             Interlocked.Increment(ref _pendingMessageCount);//+1
+
+            TrySend();
         }
 
         private void CloseInternal(SocketError socketError,string reason,Exception exception)

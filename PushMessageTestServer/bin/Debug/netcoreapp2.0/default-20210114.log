@@ -1,0 +1,35 @@
+2021-01-14 21:59:59.139 [INF] [ECommon.Socketing.ServerSocket] - Socket server is starting, name: Server, listening on listeningEndPoint: 127.0.0.1:5000.
+2021-01-14 21:59:59.508 [INF] [Program] - Pushed server message: message:1
+2021-01-14 22:00:00.513 [INF] [Program] - Pushed server message: message:2
+2021-01-14 22:00:01.518 [INF] [Program] - Pushed server message: message:3
+2021-01-14 22:00:02.527 [INF] [Program] - Pushed server message: message:4
+2021-01-14 22:00:03.548 [INF] [Program] - Pushed server message: message:5
+2021-01-14 22:00:04.555 [INF] [Program] - Pushed server message: message:6
+2021-01-14 22:00:05.567 [INF] [Program] - Pushed server message: message:7
+2021-01-14 22:00:06.577 [INF] [Program] - Pushed server message: message:8
+2021-01-14 22:00:07.587 [INF] [Program] - Pushed server message: message:9
+2021-01-14 22:00:08.608 [INF] [Program] - Pushed server message: message:10
+2021-01-14 22:00:09.616 [INF] [Program] - Pushed server message: message:11
+2021-01-14 22:00:10.328 [INF] [ECommon.Socketing.ServerSocket] - Socket server new client accepted, name: Server, listeningEndPoint: 127.0.0.1:5000, remoteEndPoint: 127.0.0.1:50133
+2021-01-14 22:00:10.627 [INF] [Program] - Pushed server message: message:12
+2021-01-14 22:00:14.735 [INF] [Program] - Pushed server message: message:13
+2021-01-14 22:00:15.747 [INF] [Program] - Pushed server message: message:14
+2021-01-14 22:00:16.756 [INF] [Program] - Pushed server message: message:15
+2021-01-14 22:00:17.764 [INF] [Program] - Pushed server message: message:16
+2021-01-14 22:00:18.775 [INF] [Program] - Pushed server message: message:17
+2021-01-14 22:00:19.785 [INF] [Program] - Pushed server message: message:18
+2021-01-14 22:30:21.147 [INF] [ECommon.Socketing.ServerSocket] - Socket server is starting, name: Server, listening on listeningEndPoint: 127.0.0.1:5000.
+2021-01-14 22:30:21.485 [INF] [Program] - Pushed server message: message:1
+2021-01-14 22:30:22.501 [INF] [Program] - Pushed server message: message:2
+2021-01-14 22:30:23.511 [INF] [Program] - Pushed server message: message:3
+2021-01-14 22:30:24.528 [INF] [Program] - Pushed server message: message:4
+2021-01-14 22:30:25.543 [INF] [Program] - Pushed server message: message:5
+2021-01-14 22:30:26.555 [INF] [Program] - Pushed server message: message:6
+2021-01-14 22:30:27.572 [INF] [Program] - Pushed server message: message:7
+2021-01-14 22:30:28.583 [INF] [Program] - Pushed server message: message:8
+2021-01-14 22:30:29.411 [INF] [ECommon.Socketing.ServerSocket] - Socket server new client accepted, name: Server, listeningEndPoint: 127.0.0.1:5000, remoteEndPoint: 127.0.0.1:50404
+2021-01-14 22:30:29.590 [INF] [Program] - Pushed server message: message:9
+2021-01-14 22:30:30.605 [INF] [Program] - Pushed server message: message:10
+2021-01-14 22:30:31.380 [INF] [ECommon.Socketing.TcpConnection] - TCP connection closed, name: Server, remoteEndPoint: 127.0.0.1:50404, socketError: "ConnectionReset", reason: Socket receive error, ex: null
+2021-01-14 22:30:31.624 [INF] [Program] - Pushed server message: message:11
+2021-01-14 22:30:32.635 [INF] [Program] - Pushed server message: message:12
