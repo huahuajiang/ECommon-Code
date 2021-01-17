@@ -49,8 +49,11 @@ namespace ECommon.Remoting
 
     public class RemotingRequestType
     {
+        //表示client将数据通过socket发送后不关心server的处理结果，
         public const short Async = 1;
+        //表示client将数据发送到server后异步等待server的处理结果
         public const short Oneway = 2;
+        //表示client将数据发送到server后同步等待server的处理结果
         public const short Callback = 3;
     }
 }

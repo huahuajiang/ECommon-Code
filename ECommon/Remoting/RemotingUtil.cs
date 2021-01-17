@@ -1,7 +1,6 @@
 ﻿using ECommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ECommon.Remoting
 {

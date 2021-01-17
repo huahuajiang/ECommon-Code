@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ECommon.Autofac\ECommon.Autofac.csproj" />
+    <ProjectReference Include="..\ECommon.Dapper\ECommon.Dapper.csproj" />
+    <ProjectReference Include="..\ECommon.JsonNet\ECommon.JsonNet.csproj" />
+    <ProjectReference Include="..\ECommon.Log4Net\ECommon.Log4Net.csproj" />
+    <ProjectReference Include="..\ECommon.Serilog\ECommon.Serilog.csproj" />
+    <ProjectReference Include="..\ECommon\ECommon.csproj" />
+  </ItemGroup>
+
+</Project>

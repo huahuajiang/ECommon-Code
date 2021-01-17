@@ -1,0 +1,7 @@
+2021-01-17 10:50:44.012 [INF] [ECommon.Socketing.ServerSocket] - Socket server is starting, name: Server, listening on listeningEndPoint: 127.0.0.1:5000.
+2021-01-17 10:50:53.534 [INF] [ECommon.Socketing.ServerSocket] - Socket server new client accepted, name: Server, listeningEndPoint: 127.0.0.1:5000, remoteEndPoint: 127.0.0.1:51170
+2021-01-17 10:50:54.118 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 27732, throughput: 27643, averageThrughput: 27643, rt: 13.913ms, averageRT: 13.913ms
+2021-01-17 10:50:55.139 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 83201, throughput: 55558, averageThrughput: 41600, rt: 13.004ms, averageRT: 13.306ms
+2021-01-17 10:50:56.147 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 141899, throughput: 58698, averageThrughput: 47299, rt: 13.095ms, averageRT: 13.219ms
+2021-01-17 10:50:57.157 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 202509, throughput: 60610, averageThrughput: 50627, rt: 12.668ms, averageRT: 13.054ms
+2021-01-17 10:50:57.432 [INF] [ECommon.Socketing.TcpConnection] - TCP connection closed, name: Server, remoteEndPoint: 127.0.0.1:51170, socketError: "ConnectionReset", reason: Socket receive error, ex: null

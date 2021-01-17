@@ -1,0 +1,30 @@
+2021-01-17 10:42:33.006 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:51069
+2021-01-17 10:42:33.927 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 54541, throughput: 54292, averageThrughput: 54292, rt: 0.013ms, averageRT: 0.013ms
+2021-01-17 10:42:34.948 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 114242, throughput: 59950, averageThrughput: 57121, rt: 0.015ms, averageRT: 0.014ms
+2021-01-17 10:42:35.960 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 178421, throughput: 64179, averageThrughput: 59473, rt: 0.014ms, averageRT: 0.014ms
+2021-01-17 10:42:36.973 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 254560, throughput: 76139, averageThrughput: 63640, rt: 0.012ms, averageRT: 0.013ms
+2021-01-17 10:42:37.988 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 314882, throughput: 60322, averageThrughput: 62976, rt: 0.015ms, averageRT: 0.014ms
+2021-01-17 10:42:39.013 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 365926, throughput: 51044, averageThrughput: 60987, rt: 0.018ms, averageRT: 0.014ms
+2021-01-17 10:42:40.020 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 437175, throughput: 71249, averageThrughput: 62453, rt: 0.012ms, averageRT: 0.014ms
+2021-01-17 10:42:41.034 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 498632, throughput: 61457, averageThrughput: 62329, rt: 0.015ms, averageRT: 0.014ms
+2021-01-17 10:42:42.049 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 549439, throughput: 50807, averageThrughput: 61048, rt: 0.018ms, averageRT: 0.014ms
+2021-01-17 10:42:43.062 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 607878, throughput: 58439, averageThrughput: 60787, rt: 0.015ms, averageRT: 0.015ms
+2021-01-17 10:42:44.076 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 652678, throughput: 44800, averageThrughput: 59334, rt: 0.021ms, averageRT: 0.015ms
+2021-01-17 10:42:45.086 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 703426, throughput: 50748, averageThrughput: 58618, rt: 0.018ms, averageRT: 0.015ms
+2021-01-17 10:42:46.094 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 760699, throughput: 57273, averageThrughput: 58515, rt: 0.016ms, averageRT: 0.015ms
+2021-01-17 10:42:47.122 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 811358, throughput: 50659, averageThrughput: 57954, rt: 0.018ms, averageRT: 0.015ms
+2021-01-17 10:42:48.132 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 875269, throughput: 63911, averageThrughput: 58351, rt: 0.014ms, averageRT: 0.015ms
+2021-01-17 10:42:49.144 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 941508, throughput: 66239, averageThrughput: 58844, rt: 0.014ms, averageRT: 0.015ms
+2021-01-17 10:42:50.159 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 997618, throughput: 56110, averageThrughput: 58683, rt: 0.016ms, averageRT: 0.015ms
+2021-01-17 10:42:51.169 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 1054628, throughput: 57010, averageThrughput: 58590, rt: 0.016ms, averageRT: 0.015ms
+2021-01-17 10:42:52.190 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 1112128, throughput: 57500, averageThrughput: 58533, rt: 0.016ms, averageRT: 0.015ms
+2021-01-17 10:42:53.203 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 1185423, throughput: 73295, averageThrughput: 59271, rt: 0.012ms, averageRT: 0.015ms
+2021-01-17 10:44:34.276 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:51082
+2021-01-17 10:44:35.196 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 60619, throughput: 60420, averageThrughput: 60420, rt: 0.012ms, averageRT: 0.012ms
+2021-01-17 10:44:36.205 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 127584, throughput: 67164, averageThrughput: 63792, rt: 0.014ms, averageRT: 0.013ms
+2021-01-17 10:44:37.225 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 181642, throughput: 54058, averageThrughput: 60547, rt: 0.017ms, averageRT: 0.014ms
+2021-01-17 10:44:38.235 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 235452, throughput: 53810, averageThrughput: 58863, rt: 0.017ms, averageRT: 0.015ms
+2021-01-17 10:50:53.516 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:51170
+2021-01-17 10:50:54.444 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 51062, throughput: 51062, averageThrughput: 51062, rt: 0.014ms, averageRT: 0.014ms
+2021-01-17 10:50:55.466 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 104642, throughput: 53580, averageThrughput: 52321, rt: 0.017ms, averageRT: 0.016ms
+2021-01-17 10:50:56.489 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 160688, throughput: 56046, averageThrughput: 53562, rt: 0.016ms, averageRT: 0.016ms

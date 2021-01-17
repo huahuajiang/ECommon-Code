@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ECommon.Remoting
+﻿namespace ECommon.Remoting
 {
     public class RemotingServerMessageType
     {
