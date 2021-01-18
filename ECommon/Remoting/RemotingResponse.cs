@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace ECommon.Remoting
 {
+    /// <summary>
+    /// 远程返回类
+    /// </summary>
     public class RemotingResponse
     {
         public short RequestType { get; set; }

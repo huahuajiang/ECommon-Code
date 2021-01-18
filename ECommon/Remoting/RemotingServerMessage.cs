@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace ECommon.Remoting
 {
+    /// <summary>
+    /// 服务信息类
+    /// </summary>
     public class RemotingServerMessage
     {
         public short Type { get; set; }

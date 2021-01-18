@@ -10,3 +10,15 @@ E:\My VS Work\ECommon-Code\ECommon.Serilog\bin\Debug\netstandard2.0\ECommon.pdb
 E:\My VS Work\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.csproj.CopyComplete
 E:\My VS Work\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.dll
 E:\My VS Work\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.pdb
+E:\VSWork\ECommon-Code\ECommon.Serilog\bin\Debug\netstandard2.0\ECommon.Serilog.deps.json
+E:\VSWork\ECommon-Code\ECommon.Serilog\bin\Debug\netstandard2.0\ECommon.Serilog.dll
+E:\VSWork\ECommon-Code\ECommon.Serilog\bin\Debug\netstandard2.0\ECommon.Serilog.pdb
+E:\VSWork\ECommon-Code\ECommon.Serilog\bin\Debug\netstandard2.0\ECommon.dll
+E:\VSWork\ECommon-Code\ECommon.Serilog\bin\Debug\netstandard2.0\ECommon.pdb
+E:\VSWork\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.csprojAssemblyReference.cache
+E:\VSWork\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.AssemblyInfoInputs.cache
+E:\VSWork\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.AssemblyInfo.cs
+E:\VSWork\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.csproj.CoreCompileInputs.cache
+E:\VSWork\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.csproj.CopyComplete
+E:\VSWork\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.dll
+E:\VSWork\ECommon-Code\ECommon.Serilog\obj\Debug\netstandard2.0\ECommon.Serilog.pdb

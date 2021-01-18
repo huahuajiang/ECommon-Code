@@ -18,8 +18,8 @@ namespace ECommon.Socketing
             {
                 NoDelay = true,
                 Blocking = false,//阻塞
-                SendBufferSize = sendBufferSize,
-                ReceiveBufferSize = receiveBufferSize
+                SendBufferSize = sendBufferSize,//发送消息的大小
+                ReceiveBufferSize = receiveBufferSize//接收消息的大小
             };
             return socket;
         }

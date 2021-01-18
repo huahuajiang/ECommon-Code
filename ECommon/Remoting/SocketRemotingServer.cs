@@ -9,17 +9,20 @@ using System.Text;
 
 namespace ECommon.Remoting
 {
+    /// <summary>
+    /// 服务端
+    /// </summary>
     public class SocketRemotingServer
     {
-        private readonly Dictionary<int, IRequestHandler> _requestHandlerDict;
+        private readonly Dictionary<int, IRequestHandler> _requestHandlerDict;//请求时的处理事件
         private readonly ILogger _logger;
         private readonly SocketSetting _setting;
-        private bool _isShuttingdown = false;
+        private bool _isShuttingdown = false;//是否停止
         private readonly byte[] HeartbeatResponseMessage = new byte[0];
 
         public string Name { get; }
         public IBufferPool BufferPool { get; }
-        public ServerSocket ServerSocket { get; }
+        public ServerSocket ServerSocket { get; }//服务端的socket
 
         public SocketRemotingServer() : this("Server", new IPEndPoint(IPAddress.Loopback, 5000)) { }
 
@@ -69,6 +72,12 @@ namespace ECommon.Remoting
             return ServerSocket.GetAllConnections();
         }
 
+        /// <summary>
+        /// 处理远程请求的事件
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="message"></param>
+        /// <param name="sendReplyAction"></param>
         private void HandleRemotingRequest(ITcpConnection connection, byte[] message, Action<byte[]> sendReplyAction)
         {
             if (_isShuttingdown) return;

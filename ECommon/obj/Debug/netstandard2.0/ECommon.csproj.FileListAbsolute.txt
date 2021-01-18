@@ -7,3 +7,12 @@ E:\My VS Work\ECommon-Code\ECommon\bin\Debug\netstandard2.0\ECommon.pdb
 E:\My VS Work\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.dll
 E:\My VS Work\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.pdb
 E:\My VS Work\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.csprojAssemblyReference.cache
+E:\VSWork\ECommon-Code\ECommon\bin\Debug\netstandard2.0\ECommon.deps.json
+E:\VSWork\ECommon-Code\ECommon\bin\Debug\netstandard2.0\ECommon.dll
+E:\VSWork\ECommon-Code\ECommon\bin\Debug\netstandard2.0\ECommon.pdb
+E:\VSWork\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.csprojAssemblyReference.cache
+E:\VSWork\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.AssemblyInfoInputs.cache
+E:\VSWork\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.AssemblyInfo.cs
+E:\VSWork\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.csproj.CoreCompileInputs.cache
+E:\VSWork\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.dll
+E:\VSWork\ECommon-Code\ECommon\obj\Debug\netstandard2.0\ECommon.pdb

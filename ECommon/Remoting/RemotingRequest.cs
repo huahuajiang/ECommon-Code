@@ -6,6 +6,9 @@ using System.Threading;
 
 namespace ECommon.Remoting
 {
+    /// <summary>
+    /// 远程请求类
+    /// </summary>
     public class RemotingRequest
     {
         private static long _sequence;

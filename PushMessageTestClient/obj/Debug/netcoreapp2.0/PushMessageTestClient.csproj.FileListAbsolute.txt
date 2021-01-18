@@ -24,3 +24,29 @@ E:\My VS Work\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMes
 E:\My VS Work\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.pdb
 E:\My VS Work\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.genruntimeconfig.cache
 E:\My VS Work\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\PushMessageTestClient.dll.config
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\PushMessageTestClient.dll.config
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\PushMessageTestClient.deps.json
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\PushMessageTestClient.runtimeconfig.json
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\PushMessageTestClient.runtimeconfig.dev.json
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\PushMessageTestClient.dll
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\PushMessageTestClient.pdb
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.Autofac.dll
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.Dapper.dll
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.dll
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.JsonNet.dll
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.Log4Net.dll
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.Serilog.dll
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.Autofac.pdb
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.Dapper.pdb
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.JsonNet.pdb
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.Log4Net.pdb
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.Serilog.pdb
+E:\VSWork\ECommon-Code\PushMessageTestClient\bin\Debug\netcoreapp2.0\ECommon.pdb
+E:\VSWork\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.csprojAssemblyReference.cache
+E:\VSWork\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.AssemblyInfoInputs.cache
+E:\VSWork\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.AssemblyInfo.cs
+E:\VSWork\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.csproj.CoreCompileInputs.cache
+E:\VSWork\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.csproj.CopyComplete
+E:\VSWork\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.dll
+E:\VSWork\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.pdb
+E:\VSWork\ECommon-Code\PushMessageTestClient\obj\Debug\netcoreapp2.0\PushMessageTestClient.genruntimeconfig.cache

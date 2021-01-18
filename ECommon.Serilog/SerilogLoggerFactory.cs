@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Concurrent;
-using ECommon.Logging;
+﻿using ECommon.Logging;
 using Serilog;
 using Serilog.Events;
+using System;
+using System.Collections.Concurrent;
 
 namespace ECommon.Serilog
 {

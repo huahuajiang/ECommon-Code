@@ -6,3 +6,12 @@ E:\My VS Work\ECommon-Code\ECommon.Dapper\bin\Debug\netstandard2.0\ECommon.Dappe
 E:\My VS Work\ECommon-Code\ECommon.Dapper\bin\Debug\netstandard2.0\ECommon.Dapper.pdb
 E:\My VS Work\ECommon-Code\ECommon.Dapper\obj\Debug\netstandard2.0\ECommon.Dapper.dll
 E:\My VS Work\ECommon-Code\ECommon.Dapper\obj\Debug\netstandard2.0\ECommon.Dapper.pdb
+E:\VSWork\ECommon-Code\ECommon.Dapper\bin\Debug\netstandard2.0\ECommon.Dapper.deps.json
+E:\VSWork\ECommon-Code\ECommon.Dapper\bin\Debug\netstandard2.0\ECommon.Dapper.dll
+E:\VSWork\ECommon-Code\ECommon.Dapper\bin\Debug\netstandard2.0\ECommon.Dapper.pdb
+E:\VSWork\ECommon-Code\ECommon.Dapper\obj\Debug\netstandard2.0\ECommon.Dapper.csprojAssemblyReference.cache
+E:\VSWork\ECommon-Code\ECommon.Dapper\obj\Debug\netstandard2.0\ECommon.Dapper.AssemblyInfoInputs.cache
+E:\VSWork\ECommon-Code\ECommon.Dapper\obj\Debug\netstandard2.0\ECommon.Dapper.AssemblyInfo.cs
+E:\VSWork\ECommon-Code\ECommon.Dapper\obj\Debug\netstandard2.0\ECommon.Dapper.csproj.CoreCompileInputs.cache
+E:\VSWork\ECommon-Code\ECommon.Dapper\obj\Debug\netstandard2.0\ECommon.Dapper.dll
+E:\VSWork\ECommon-Code\ECommon.Dapper\obj\Debug\netstandard2.0\ECommon.Dapper.pdb

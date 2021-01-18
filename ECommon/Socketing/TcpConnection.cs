@@ -36,8 +36,8 @@ namespace ECommon.Socketing
         private Action<ITcpConnection, SocketError> _connectionClosedHandler;
         private Action<ITcpConnection, byte[]> _messageArrivedHandler;
 
-        private int _sending;
-        private int _receiving;
+        private int _sending;//1为启动 0为停止
+        private int _receiving;//1为启动 0为停止
         private int _parsing;
         private int _closing;
 

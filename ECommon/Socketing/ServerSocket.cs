@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace ECommon.Socketing
 {
+    /// <summary>
+    /// 服务端socket
+    /// </summary>
     public class ServerSocket
     {
         private readonly Socket _socket;
@@ -40,7 +43,7 @@ namespace ECommon.Socketing
             _connectionEventListeners = new List<IConnectionEventListener>();
             _messageArrivedHandler = messageArrivedHandler;
             _connectionDict = new ConcurrentDictionary<Guid, ITcpConnection>();
-            _socket = SocketUtils.CreateSocket(_setting.SendBufferSize, _setting.ReceiveBufferSize);
+            _socket = SocketUtils.CreateSocket(_setting.SendBufferSize, _setting.ReceiveBufferSize);//创建socket
             _acceptSocketArgs = new SocketAsyncEventArgs();
             _acceptSocketArgs.Completed += AcceptCompleted;
             _logger = ObjectContainer.Resolve<ILoggerFactory>().Create(GetType().FullName);

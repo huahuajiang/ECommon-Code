@@ -1,0 +1,29 @@
+2021-01-18 15:13:00.988 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:13999
+2021-01-18 15:13:01.800 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 9074, throughput: 9074, averageThrughput: 9074, rt: 0.054ms, averageRT: 0.054ms
+2021-01-18 15:13:03.327 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 91616, throughput: 82542, averageThrughput: 45808, rt: 0.015ms, averageRT: 0.019ms
+2021-01-18 15:13:04.384 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 220387, throughput: 128771, averageThrughput: 73462, rt: 0.006ms, averageRT: 0.011ms
+2021-01-18 15:13:05.425 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 347270, throughput: 126883, averageThrughput: 86817, rt: 0.006ms, averageRT: 0.009ms
+2021-01-18 15:13:06.435 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 467217, throughput: 119947, averageThrughput: 93443, rt: 0.006ms, averageRT: 0.009ms
+2021-01-18 15:13:07.462 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 618476, throughput: 151259, averageThrughput: 103079, rt: 0.005ms, averageRT: 0.008ms
+2021-01-18 15:13:08.515 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 757152, throughput: 138676, averageThrughput: 108164, rt: 0.006ms, averageRT: 0.007ms
+2021-01-18 15:13:09.533 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 891675, throughput: 134523, averageThrughput: 111459, rt: 0.005ms, averageRT: 0.007ms
+2021-01-18 15:13:10.558 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 1036378, throughput: 144703, averageThrughput: 115153, rt: 0.005ms, averageRT: 0.007ms
+2021-01-18 15:13:11.577 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 1177701, throughput: 141323, averageThrughput: 117770, rt: 0.005ms, averageRT: 0.007ms
+2021-01-18 15:13:12.583 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 1317833, throughput: 140132, averageThrughput: 119803, rt: 0.005ms, averageRT: 0.006ms
+2021-01-18 15:13:13.610 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 1458253, throughput: 140420, averageThrughput: 121521, rt: 0.005ms, averageRT: 0.006ms
+2021-01-18 15:13:14.628 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 1604428, throughput: 146175, averageThrughput: 123417, rt: 0.005ms, averageRT: 0.006ms
+2021-01-18 15:13:15.639 [INF] [Program] - SendMessage, mode:Oneway, totalCount: 1739045, throughput: 134617, averageThrughput: 124217, rt: 0.005ms, averageRT: 0.006ms
+2021-01-18 15:14:18.684 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:14049
+2021-01-18 15:14:19.389 [INF] [Program] - SendMessage, mode:Async, totalCount: 1501, throughput: 1501, averageThrughput: 1501, rt: 320.140ms, averageRT: 320.140ms
+2021-01-18 15:14:21.428 [INF] [Program] - SendMessage, mode:Async, totalCount: 27106, throughput: 25605, averageThrughput: 13553, rt: 137.268ms, averageRT: 147.395ms
+2021-01-18 15:14:24.239 [INF] [Program] - SendMessage, mode:Async, totalCount: 82560, throughput: 55454, averageThrughput: 27520, rt: 158.123ms, averageRT: 154.601ms
+2021-01-18 15:14:27.458 [INF] [Program] - SendMessage, mode:Async, totalCount: 141570, throughput: 59010, averageThrughput: 35392, rt: 128.488ms, averageRT: 143.716ms
+2021-01-18 15:14:30.148 [INF] [Program] - SendMessage, mode:Async, totalCount: 193860, throughput: 52290, averageThrughput: 38772, rt: 120.445ms, averageRT: 137.439ms
+2021-01-18 15:14:32.415 [INF] [Program] - SendMessage, mode:Async, totalCount: 234908, throughput: 41048, averageThrughput: 39151, rt: 104.288ms, averageRT: 131.647ms
+2021-01-18 15:14:35.475 [INF] [Program] - SendMessage, mode:Async, totalCount: 290621, throughput: 55713, averageThrughput: 41517, rt: 115.854ms, averageRT: 128.619ms
+2021-01-18 15:14:38.338 [INF] [Program] - SendMessage, mode:Async, totalCount: 344981, throughput: 54360, averageThrughput: 43122, rt: 110.117ms, averageRT: 125.704ms
+2021-01-18 15:14:40.796 [INF] [Program] - SendMessage, mode:Async, totalCount: 392514, throughput: 47533, averageThrughput: 43612, rt: 113.946ms, averageRT: 124.280ms
+2021-01-18 15:14:43.103 [INF] [Program] - SendMessage, mode:Async, totalCount: 435380, throughput: 42866, averageThrughput: 43538, rt: 119.436ms, averageRT: 123.803ms
+2021-01-18 15:14:45.608 [INF] [Program] - SendMessage, mode:Async, totalCount: 481882, throughput: 46502, averageThrughput: 43807, rt: 117.579ms, averageRT: 123.202ms
+2021-01-18 15:14:48.378 [INF] [Program] - SendMessage, mode:Async, totalCount: 526962, throughput: 45080, averageThrughput: 43913, rt: 145.126ms, averageRT: 125.078ms
+2021-01-18 15:14:51.242 [INF] [Program] - SendMessage, mode:Async, totalCount: 575210, throughput: 48248, averageThrughput: 44246, rt: 142.511ms, averageRT: 126.540ms

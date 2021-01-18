@@ -14,3 +14,11 @@ E:\My VS Work\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.pdb
 E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.csproj.CopyComplete
 E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.dll
 E:\My VS Work\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.pdb
+E:\VSWork\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.Autofac.deps.json
+E:\VSWork\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.Autofac.dll
+E:\VSWork\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.Autofac.pdb
+E:\VSWork\ECommon-Code\ECommon.Autofac\bin\Debug\netstandard2.0\ECommon.pdb
+E:\VSWork\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.csproj.CoreCompileInputs.cache
+E:\VSWork\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.csproj.CopyComplete
+E:\VSWork\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.dll
+E:\VSWork\ECommon-Code\ECommon.Autofac\obj\Debug\netstandard2.0\ECommon.Autofac.pdb

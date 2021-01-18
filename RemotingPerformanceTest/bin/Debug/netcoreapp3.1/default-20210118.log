@@ -1,0 +1,30 @@
+2021-01-18 15:12:21.927 [INF] [ECommon.Socketing.ServerSocket] - Socket server is starting, name: Server, listening on listeningEndPoint: 127.0.0.1:5000.
+2021-01-18 15:13:01.042 [INF] [ECommon.Socketing.ServerSocket] - Socket server new client accepted, name: Server, listeningEndPoint: 127.0.0.1:5000, remoteEndPoint: 127.0.0.1:13999
+2021-01-18 15:13:01.283 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 1, throughput: 1, averageThrughput: 1, rt: 31.050ms, averageRT: 31.050ms
+2021-01-18 15:13:02.525 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 26541, throughput: 26540, averageThrughput: 13270, rt: 43.767ms, averageRT: 43.766ms
+2021-01-18 15:13:03.598 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 122040, throughput: 95499, averageThrughput: 40680, rt: 12.490ms, averageRT: 19.292ms
+2021-01-18 15:13:04.620 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 244453, throughput: 122412, averageThrughput: 61113, rt: 9.397ms, averageRT: 14.337ms
+2021-01-18 15:13:05.701 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 377118, throughput: 132666, averageThrughput: 75423, rt: 9.423ms, averageRT: 12.608ms
+2021-01-18 15:13:06.718 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 509351, throughput: 132233, averageThrughput: 84891, rt: 8.791ms, averageRT: 11.617ms
+2021-01-18 15:13:07.738 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 648917, throughput: 139565, averageThrughput: 92702, rt: 8.283ms, averageRT: 10.900ms
+2021-01-18 15:13:08.764 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 793768, throughput: 144852, averageThrughput: 99221, rt: 8.023ms, averageRT: 10.375ms
+2021-01-18 15:13:09.785 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 928781, throughput: 135013, averageThrughput: 103197, rt: 8.380ms, averageRT: 10.085ms
+2021-01-18 15:13:10.801 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 1066278, throughput: 137496, averageThrughput: 106627, rt: 8.519ms, averageRT: 9.883ms
+2021-01-18 15:13:11.827 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 1212119, throughput: 145842, averageThrughput: 110192, rt: 8.140ms, averageRT: 9.674ms
+2021-01-18 15:13:12.842 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 1353528, throughput: 141409, averageThrughput: 112794, rt: 8.074ms, averageRT: 9.506ms
+2021-01-18 15:13:13.848 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 1489547, throughput: 136019, averageThrughput: 114580, rt: 8.464ms, averageRT: 9.411ms
+2021-01-18 15:13:14.871 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 1633695, throughput: 144148, averageThrughput: 116692, rt: 7.997ms, averageRT: 9.286ms
+2021-01-18 15:13:15.892 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 1775551, throughput: 141856, averageThrughput: 118370, rt: 8.236ms, averageRT: 9.203ms
+2021-01-18 15:14:06.629 [INF] [ECommon.Socketing.ServerSocket] - Socket server is starting, name: Server, listening on listeningEndPoint: 127.0.0.1:5000.
+2021-01-18 15:14:18.714 [INF] [ECommon.Socketing.ServerSocket] - Socket server new client accepted, name: Server, listeningEndPoint: 127.0.0.1:5000, remoteEndPoint: 127.0.0.1:14049
+2021-01-18 15:14:20.029 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 7961, throughput: 7928, averageThrughput: 7928, rt: 119.298ms, averageRT: 119.298ms
+2021-01-18 15:14:21.467 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 29095, throughput: 21167, averageThrughput: 14547, rt: 67.392ms, averageRT: 81.552ms
+2021-01-18 15:14:22.747 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 54682, throughput: 25587, averageThrughput: 18227, rt: 38.968ms, averageRT: 61.626ms
+2021-01-18 15:14:25.921 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 113034, throughput: 58352, averageThrughput: 28258, rt: 53.935ms, averageRT: 57.655ms
+2021-01-18 15:14:29.623 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 184299, throughput: 71265, averageThrughput: 36859, rt: 48.810ms, averageRT: 54.235ms
+2021-01-18 15:14:32.915 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 243329, throughput: 59030, averageThrughput: 40554, rt: 52.698ms, averageRT: 53.862ms
+2021-01-18 15:14:36.733 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 314480, throughput: 71151, averageThrughput: 44925, rt: 47.460ms, averageRT: 52.414ms
+2021-01-18 15:14:40.102 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 381156, throughput: 66676, averageThrughput: 47644, rt: 46.593ms, averageRT: 51.396ms
+2021-01-18 15:14:43.825 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 449312, throughput: 68156, averageThrughput: 49923, rt: 52.030ms, averageRT: 51.492ms
+2021-01-18 15:14:47.295 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 511930, throughput: 62618, averageThrughput: 51193, rt: 52.666ms, averageRT: 51.635ms
+2021-01-18 15:14:50.179 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 559384, throughput: 47454, averageThrughput: 50853, rt: 51.010ms, averageRT: 51.582ms
