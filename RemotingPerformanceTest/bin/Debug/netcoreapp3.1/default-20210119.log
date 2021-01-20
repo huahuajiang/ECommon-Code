@@ -1,0 +1,7 @@
+2021-01-19 11:44:11.029 [INF] [ECommon.Socketing.ServerSocket] - Socket server is starting, name: Server, listening on listeningEndPoint: 127.0.0.1:5000.
+2021-01-19 11:44:23.335 [INF] [ECommon.Socketing.ServerSocket] - Socket server new client accepted, name: Server, listeningEndPoint: 127.0.0.1:5000, remoteEndPoint: 127.0.0.1:30038
+2021-01-19 11:44:24.324 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 5125, throughput: 5125, averageThrughput: 5125, rt: 131.977ms, averageRT: 131.977ms
+2021-01-19 11:44:26.345 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 33338, throughput: 28213, averageThrughput: 16669, rt: 71.240ms, averageRT: 80.577ms
+2021-01-19 11:44:29.079 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 84427, throughput: 51089, averageThrughput: 28142, rt: 50.147ms, averageRT: 62.163ms
+2021-01-19 11:44:32.895 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 152727, throughput: 68300, averageThrughput: 38181, rt: 51.022ms, averageRT: 57.181ms
+2021-01-19 11:44:33.952 [INF] [RemotingPerformanceTest.Program+RequestHandler] - ReceiveMessage, totalCount: 174018, throughput: 21291, averageThrughput: 34803, rt: 46.592ms, averageRT: 55.886ms

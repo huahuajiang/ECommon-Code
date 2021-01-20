@@ -10,7 +10,7 @@ using System.Text;
 namespace ECommon.Remoting
 {
     /// <summary>
-    /// 服务端
+    /// 服务端  相当于一个服务层
     /// </summary>
     public class SocketRemotingServer
     {
@@ -53,6 +53,13 @@ namespace ECommon.Remoting
             ServerSocket.Shutdown();
             return this;
         }
+
+        /// <summary>
+        /// 注册请求时的处理事件
+        /// </summary>
+        /// <param name="requestCode"></param>
+        /// <param name="requestHandler"></param>
+        /// <returns></returns>
         public SocketRemotingServer RegisterRequestHandler(int requestCode, IRequestHandler requestHandler)
         {
             _requestHandlerDict[requestCode] = requestHandler;

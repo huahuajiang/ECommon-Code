@@ -72,7 +72,7 @@ namespace ECommon.Socketing
                 _socket.Bind(_localEndPoint);
             }
 
-            var firedAsync = _socket.ConnectAsync(socketArgs);
+            var firedAsync = _socket.ConnectAsync(socketArgs);//开始异步请求到远程主机的连接
             if (!firedAsync)
             {
                 ProcessConnect(socketArgs);

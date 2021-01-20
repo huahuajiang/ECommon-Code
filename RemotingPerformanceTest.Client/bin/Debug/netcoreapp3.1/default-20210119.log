@@ -1,0 +1,8 @@
+2021-01-19 11:44:23.272 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:30038
+2021-01-19 11:44:24.055 [INF] [Program] - SendMessage, mode:Async, totalCount: 2329, throughput: 2329, averageThrughput: 2329, rt: 187.696ms, averageRT: 187.696ms
+2021-01-19 11:44:26.107 [INF] [Program] - SendMessage, mode:Async, totalCount: 28031, throughput: 25702, averageThrughput: 14015, rt: 150.603ms, averageRT: 153.685ms
+2021-01-19 11:44:27.171 [INF] [Program] - SendMessage, mode:Async, totalCount: 47257, throughput: 19226, averageThrughput: 15752, rt: 121.043ms, averageRT: 140.405ms
+2021-01-19 11:44:29.696 [INF] [Program] - SendMessage, mode:Async, totalCount: 93383, throughput: 46126, averageThrughput: 23345, rt: 111.302ms, averageRT: 126.030ms
+2021-01-19 11:44:32.481 [INF] [Program] - SendMessage, mode:Async, totalCount: 144335, throughput: 50952, averageThrughput: 28867, rt: 113.179ms, averageRT: 121.493ms
+2021-01-19 11:44:33.514 [INF] [Program] - SendMessage, mode:Async, totalCount: 162735, throughput: 18400, averageThrughput: 27122, rt: 115.728ms, averageRT: 120.841ms
+2021-01-19 11:44:38.533 [INF] [Program] - SendMessage, mode:Async, totalCount: 232796, throughput: 70061, averageThrughput: 33256, rt: 143.152ms, averageRT: 127.556ms

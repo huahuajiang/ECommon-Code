@@ -6,7 +6,7 @@ using System.Linq;
 namespace ECommon.Remoting
 {
     /// <summary>
-    /// 服务信息类
+    /// 服务端发送的信息类
     /// </summary>
     public class RemotingServerMessage
     {

@@ -25,7 +25,7 @@ namespace ECommon.Socketing
         private readonly IList<IConnectionEventListener> _connectionEventListeners;
         private readonly Action<ITcpConnection, byte[], Action<byte[]>> _messageArrivedHandler;
         private readonly IBufferPool _receiveDataBufferPool;
-        private readonly ConcurrentDictionary<Guid, ITcpConnection> _connectionDict;
+        private readonly ConcurrentDictionary<Guid, ITcpConnection> _connectionDict;//所有的TcpConnection
         private readonly ILogger _logger;
         private readonly string _name;
 
@@ -36,8 +36,8 @@ namespace ECommon.Socketing
             Ensure.NotNull(receiveDataBufferPool, "receiveDataBufferPool");
             Ensure.NotNull(messageArrivedHandler, "messageArrivedHandler");
 
-            _name = name;
-            _listeningEndPoint = listeningEndPoint;
+            _name = name;//名称
+            _listeningEndPoint = listeningEndPoint;//本地IP地址
             _setting = setting;
             _receiveDataBufferPool = receiveDataBufferPool;
             _connectionEventListeners = new List<IConnectionEventListener>();
@@ -105,6 +105,8 @@ namespace ECommon.Socketing
         {
             try
             {
+                //如果 I/O 操作挂起，则为 true。 操作完成时，将引发 e 参数的 Completed 事件。
+                //如果 I/O 操作同步完成，则为 false。 将不会引发 e 参数的 Completed 事件，并且可能在方法调用返回后立即检查作为参数传递的 e 对象以检索操作的结果。
                 var firedAsynce = _socket.AcceptAsync(_acceptSocketArgs); //开始异步操作以接受传入的连接尝试
                 if (!firedAsynce)
                 {
@@ -126,6 +128,7 @@ namespace ECommon.Socketing
             ProcessAccept(e);
         }
 
+        //接受完毕 开始接收和发送
         private void ProcessAccept(SocketAsyncEventArgs e)
         {
             try
@@ -150,6 +153,7 @@ namespace ECommon.Socketing
             {
                 try
                 {
+                    //
                     var connection = new TcpConnection(_name, socket, _setting, _receiveDataBufferPool, OnMessageArrived, OnConnectionClosed);
                     if (_connectionDict.TryAdd(connection.Id, connection))
                     {

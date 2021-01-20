@@ -31,7 +31,7 @@ namespace ECommon.Socketing
         private readonly IMessageFramer _framer;
         private readonly ILogger _logger;
         private readonly ConcurrentQueue<IEnumerable<ArraySegment<byte>>> _sendingQueue = new ConcurrentQueue<IEnumerable<ArraySegment<byte>>>();
-        private readonly MemoryStream _sendingStream = new MemoryStream();
+        private readonly MemoryStream _sendingStream = new MemoryStream();//发送的消息流
 
         private Action<ITcpConnection, SocketError> _connectionClosedHandler;
         private Action<ITcpConnection, byte[]> _messageArrivedHandler;
@@ -41,7 +41,7 @@ namespace ECommon.Socketing
         private int _parsing;
         private int _closing;
 
-        private long _pendingMessageCount = 0L;
+        private long _pendingMessageCount = 0L;//待执行的消息
 
 
         public Guid Id { get; }
@@ -93,7 +93,7 @@ namespace ECommon.Socketing
 
             _logger = ObjectContainer.Resolve<ILoggerFactory>().Create(GetType().FullName);
             _framer = ObjectContainer.Resolve<IMessageFramer>();
-            _framer.RegisterMessageArrivedCallback(OnMessageArrived);
+            _framer.RegisterMessageArrivedCallback(OnMessageArrived);//执行到达的消息
 
             TryReceive();
             TrySend();
@@ -205,7 +205,7 @@ namespace ECommon.Socketing
                     ExitReceiving();
                     return;
                 }
-
+                //AcceptSocket：获取或设置要使用的套接字或创建用于接受与异步套接字方法的连接的套接字
                 bool firedAsync = _receiveSocketArgs.AcceptSocket.ReceiveAsync(_receiveSocketArgs);
                 if (!firedAsync)
                 {
