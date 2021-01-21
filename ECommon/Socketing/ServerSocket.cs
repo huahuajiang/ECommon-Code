@@ -139,11 +139,20 @@ namespace ECommon.Socketing
                     e.AcceptSocket = null;
                     OnSocketAccepted(acceptSocket, e.UserToken);
                 }
+                else
+                {
+                    SocketUtils.ShutdownSocket(e.AcceptSocket);
+                    e.AcceptSocket = null;
+                }
             }
             catch (ObjectDisposedException) { }
             catch (Exception ex)
             {
                 _logger.Error(string.Format("Socket server process accept has exception, name: {0}, listeningEndPoint: {1}.", _name, _listeningEndPoint), ex);
+            }
+            finally
+            {
+                StartAccepting();
             }
         }
 

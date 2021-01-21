@@ -1,0 +1,8 @@
+2021-01-21 17:40:25.885 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:21598
+2021-01-21 17:40:26.798 [INF] [Program] - Received server message: message:19
+2021-01-21 17:40:27.767 [INF] [Program] - Received server message: message:20
+2021-01-21 17:40:28.771 [INF] [Program] - Received server message: message:21
+2021-01-21 17:40:29.775 [INF] [Program] - Received server message: message:22
+2021-01-21 17:40:30.781 [INF] [Program] - Received server message: message:23
+2021-01-21 17:40:31.784 [INF] [Program] - Received server message: message:24
+2021-01-21 17:40:32.788 [INF] [Program] - Received server message: message:25

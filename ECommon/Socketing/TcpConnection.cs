@@ -135,7 +135,7 @@ namespace ECommon.Socketing
             try
             {
                 _sendSocketArgs.SetBuffer(_sendingStream.GetBuffer(), 0, (int)_sendingStream.Length);
-                var firedAsync = _sendSocketArgs.AcceptSocket.SendAsync(_sendSocketArgs);
+                var firedAsync = _sendSocketArgs.AcceptSocket.SendAsync(_sendSocketArgs);//将数据异步发送到连接的 Socket 对象
                 if (!firedAsync)
                 {
                     Task.Factory.StartNew(() => ProcessSend(_sendSocketArgs));

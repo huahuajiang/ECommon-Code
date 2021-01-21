@@ -1,0 +1,36 @@
+2021-01-21 17:31:45.815 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:21228
+2021-01-21 17:32:43.734 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:21279
+2021-01-21 17:33:21.850 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:21303
+2021-01-21 17:33:42.207 [INF] [ECommon.Socketing.TcpConnection] - TCP connection closed, name: Client, remoteEndPoint: 127.0.0.1:5000, socketError: "ConnectionReset", reason: Socket receive error, ex: null
+2021-01-21 17:33:43.326 [INF] [ECommon.Remoting.SocketRemotingClient] - Try to reconnect to server, name: Client, serverAddress: 127.0.0.1:5000
+2021-01-21 17:33:59.872 [ERR] [ECommon.Socketing.ClientSocket] - Client socket connect failed, name: Client, remotingServerEndPoint: 127.0.0.1:5000, socketError: "ConnectionRefused"
+2021-01-21 17:33:59.873 [ERR] [ECommon.Remoting.SocketRemotingClient] - Reconnect to server has exception, name: Client, serverAddress: 127.0.0.1:5000
+System.Exception: Client socket connect failed or timeout, name: Client, serverEndPoint: 127.0.0.1:5000
+   at ECommon.Socketing.ClientSocket.Start(Int32 waitMilliseconds) in E:\VSWork\ECommon-Code\ECommon\Socketing\ClientSocket.cs:line 88
+   at ECommon.Remoting.SocketRemotingClient.ReconnectServer() in E:\VSWork\ECommon-Code\ECommon\Remoting\SocketRemotingClient.cs:line 246
+2021-01-21 17:34:28.058 [INF] [ECommon.Remoting.SocketRemotingClient] - Try to reconnect to server, name: Client, serverAddress: 127.0.0.1:5000
+2021-01-21 17:34:33.114 [ERR] [ECommon.Socketing.ClientSocket] - Client socket connect failed, name: Client, remotingServerEndPoint: 127.0.0.1:5000, socketError: "ConnectionRefused"
+2021-01-21 17:34:33.141 [ERR] [ECommon.Remoting.SocketRemotingClient] - Reconnect to server has exception, name: Client, serverAddress: 127.0.0.1:5000
+System.Exception: Client socket connect failed or timeout, name: Client, serverEndPoint: 127.0.0.1:5000
+   at ECommon.Socketing.ClientSocket.Start(Int32 waitMilliseconds) in E:\VSWork\ECommon-Code\ECommon\Socketing\ClientSocket.cs:line 88
+   at ECommon.Remoting.SocketRemotingClient.ReconnectServer() in E:\VSWork\ECommon-Code\ECommon\Remoting\SocketRemotingClient.cs:line 246
+2021-01-21 17:38:24.542 [INF] [ECommon.Socketing.ClientSocket] - Client socket connected, name: Client, remotingServerEndPoint: 127.0.0.1:5000, localEndPoint: 127.0.0.1:21504
+2021-01-21 17:38:25.581 [INF] [Program] - Received server message: message:15
+2021-01-21 17:38:26.623 [INF] [Program] - Received server message: message:16
+2021-01-21 17:38:27.631 [INF] [Program] - Received server message: message:17
+2021-01-21 17:38:28.641 [INF] [Program] - Received server message: message:18
+2021-01-21 17:38:29.695 [INF] [Program] - Received server message: message:19
+2021-01-21 17:38:30.693 [INF] [Program] - Received server message: message:20
+2021-01-21 17:38:31.700 [INF] [Program] - Received server message: message:21
+2021-01-21 17:38:32.705 [INF] [Program] - Received server message: message:22
+2021-01-21 17:38:33.709 [INF] [Program] - Received server message: message:23
+2021-01-21 17:38:34.718 [INF] [Program] - Received server message: message:24
+2021-01-21 17:38:35.726 [INF] [Program] - Received server message: message:25
+2021-01-21 17:38:36.734 [INF] [Program] - Received server message: message:26
+2021-01-21 17:38:37.738 [INF] [Program] - Received server message: message:27
+2021-01-21 17:38:38.762 [INF] [Program] - Received server message: message:28
+2021-01-21 17:38:39.771 [INF] [Program] - Received server message: message:29
+2021-01-21 17:38:40.777 [INF] [Program] - Received server message: message:30
+2021-01-21 17:38:41.784 [INF] [Program] - Received server message: message:31
+2021-01-21 17:38:42.786 [INF] [Program] - Received server message: message:32
+2021-01-21 17:38:43.790 [INF] [Program] - Received server message: message:33
