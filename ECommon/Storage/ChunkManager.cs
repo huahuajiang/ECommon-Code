@@ -37,5 +37,20 @@ namespace ECommon.Storage
                 return incrementBytes;
             }
         }
+
+        class CountInfo
+        {
+            public long PreviousCount;
+            public long CurrentCount;
+
+            public long UpgradeCount()
+            {
+                var incrementCount = CurrentCount - PreviousCount;
+                PreviousCount = CurrentCount;
+                return incrementCount;
+            }
+        }
+
+        public string Name { get; private set; }
     }
 }
