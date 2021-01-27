@@ -2891,19 +2891,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\": {}
+    "C:\\Users\\98092\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\VSWork\\ECommon-Code\\QuickStart.NameServer\\QuickStart.NameServer.csproj",
+      "projectUniqueName": "E:\\My VS Work\\ECommon-Code\\QuickStart.NameServer\\QuickStart.NameServer.csproj",
       "projectName": "QuickStart.NameServer",
-      "projectPath": "E:\\VSWork\\ECommon-Code\\QuickStart.NameServer\\QuickStart.NameServer.csproj",
-      "packagesPath": "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\",
-      "outputPath": "E:\\VSWork\\ECommon-Code\\QuickStart.NameServer\\obj\\",
+      "projectPath": "E:\\My VS Work\\ECommon-Code\\QuickStart.NameServer\\QuickStart.NameServer.csproj",
+      "packagesPath": "C:\\Users\\98092\\.nuget\\packages\\",
+      "outputPath": "E:\\My VS Work\\ECommon-Code\\QuickStart.NameServer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\LIUJUNHUA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\98092\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2915,25 +2915,24 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "targetAlias": "netcoreapp2.1",
           "projectReferences": {
-            "E:\\VSWork\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj": {
-              "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj"
+            "E:\\My VS Work\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj": {
+              "projectPath": "E:\\My VS Work\\ECommon-Code\\ECommon.Autofac\\ECommon.Autofac.csproj"
             },
-            "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj": {
-              "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj"
+            "E:\\My VS Work\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj": {
+              "projectPath": "E:\\My VS Work\\ECommon-Code\\ECommon.Dapper\\ECommon.Dapper.csproj"
             },
-            "E:\\VSWork\\ECommon-Code\\ECommon.JsonNet\\ECommon.JsonNet.csproj": {
-              "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon.JsonNet\\ECommon.JsonNet.csproj"
+            "E:\\My VS Work\\ECommon-Code\\ECommon.JsonNet\\ECommon.JsonNet.csproj": {
+              "projectPath": "E:\\My VS Work\\ECommon-Code\\ECommon.JsonNet\\ECommon.JsonNet.csproj"
             },
-            "E:\\VSWork\\ECommon-Code\\ECommon.Log4Net\\ECommon.Log4Net.csproj": {
-              "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon.Log4Net\\ECommon.Log4Net.csproj"
+            "E:\\My VS Work\\ECommon-Code\\ECommon.Log4Net\\ECommon.Log4Net.csproj": {
+              "projectPath": "E:\\My VS Work\\ECommon-Code\\ECommon.Log4Net\\ECommon.Log4Net.csproj"
             },
-            "E:\\VSWork\\ECommon-Code\\ECommon.Serilog\\ECommon.Serilog.csproj": {
-              "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon.Serilog\\ECommon.Serilog.csproj"
+            "E:\\My VS Work\\ECommon-Code\\ECommon.Serilog\\ECommon.Serilog.csproj": {
+              "projectPath": "E:\\My VS Work\\ECommon-Code\\ECommon.Serilog\\ECommon.Serilog.csproj"
             },
-            "E:\\VSWork\\ECommon-Code\\ECommon\\ECommon.csproj": {
-              "projectPath": "E:\\VSWork\\ECommon-Code\\ECommon\\ECommon.csproj"
+            "E:\\My VS Work\\ECommon-Code\\ECommon\\ECommon.csproj": {
+              "projectPath": "E:\\My VS Work\\ECommon-Code\\ECommon\\ECommon.csproj"
             }
           }
         }
@@ -2946,7 +2945,6 @@
     },
     "frameworks": {
       "netcoreapp2.1": {
-        "targetAlias": "netcoreapp2.1",
         "dependencies": {
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
@@ -2965,7 +2963,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "mb5NGNDku7J9erhYHDA3w6skEx/luLJSaq926M6NNbFa2IZrfiC9U2WXP4/4jat3cwKN0VbL7Uuyhj4D8fjTIw==",
+  "dgSpecHash": "x5QLe1yzCihb138WdV7yhHtgSciG+gk7Ww1QPERMGqZEDF+8A68xov8Hs7TlEUjlW099Q6DC5C52C7Pi0+y6OA==",
   "success": true,
-  "projectFilePath": "E:\\VSWork\\ECommon-Code\\ECommon.JsonNet\\ECommon.JsonNet.csproj",
+  "projectFilePath": "E:\\My VS Work\\ECommon-Code\\ECommon.JsonNet\\ECommon.JsonNet.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\LIUJUNHUA\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+    "C:\\Users\\98092\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\98092\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\98092\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
   ],
   "logs": []
 }

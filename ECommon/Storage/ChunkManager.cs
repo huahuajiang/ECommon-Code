@@ -1,10 +1,12 @@
 ﻿using ECommon.Components;
 using ECommon.Logging;
 using ECommon.Scheduling;
+using ECommon.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ECommon.Storage
 {
@@ -52,5 +54,59 @@ namespace ECommon.Storage
         }
 
         public string Name { get; private set; }
+        public ChunkManagerConfig Config { get { return _config; } }
+        public string ChunkPath { get { return _chunkPath; } }
+        public bool IsMemory { get { return _isMemoryMode; } }
+        public ChunkManager(string name,ChunkManagerConfig config,bool isMemoryMode,IEnumerable<string> relativePaths = null)
+        {
+            Ensure.NotNull(name, "name");
+            Ensure.NotNull(config, "config");
+
+            Name = name;
+            _config = config;
+            _isMemoryMode = isMemoryMode;
+            if (relativePaths == null)
+            {
+                _chunkPath = _config.BasePath;
+            }
+            else
+            {
+                var chunkPath = _config.BasePath;
+                foreach(var relativePath in relativePaths)
+                {
+                    chunkPath = Path.Combine(chunkPath, relativePath);
+                }
+                _chunkPath = chunkPath;
+            }
+            if (!Directory.Exists(_chunkPath))
+            {
+                Directory.CreateDirectory(_chunkPath);
+            }
+            _chunks = new ConcurrentDictionary<int, Chunk>();
+            _scheduleService = ObjectContainer.Resolve<IScheduleService>();
+            _byteWriteDict = new ConcurrentDictionary<int, BytesInfo>();
+            _fileReadDict = new ConcurrentDictionary<int, CountInfo>();
+            _unmanagedReadDict = new ConcurrentDictionary<int, CountInfo>();
+            _cachedReadDict = new ConcurrentDictionary<int, CountInfo>();
+        }
+
+        public void Load<T>(Func<byte[],T> readRecordFunc) where T : ILogRecord
+        {
+            if (_isMemoryMode) return;
+            lock (_lockObj)
+            {
+                if (!Directory.Exists(_chunkPath))
+                {
+                    Directory.CreateDirectory(_chunkPath);
+                }
+
+                var tempFiles = _config.FileNamingStrategy.GetTempFiles(_chunkPath);
+                foreach(var file in tempFiles)
+                {
+
+                }
+            }
+        }
+
     }
 }
