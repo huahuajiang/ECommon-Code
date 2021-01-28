@@ -21,7 +21,7 @@ namespace ECommon.Storage
             {
                 using (var writer = new BinaryWriter(stream))
                 {
-                    writer.Write(ChunkDataTotalSize):
+                    writer.Write(ChunkDataTotalSize);
                 }
             }
             return array;

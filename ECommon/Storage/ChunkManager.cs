@@ -103,7 +103,19 @@ namespace ECommon.Storage
                 var tempFiles = _config.FileNamingStrategy.GetTempFiles(_chunkPath);
                 foreach(var file in tempFiles)
                 {
+                    File.SetAttributes(file, FileAttributes.Normal);
+                    File.Delete(file);
+                }
 
+                var files = _config.FileNamingStrategy.GetChunkFiles(_chunkPath);
+                if (files.Length > 0)
+                {
+                    var cachedChunkCount = 0;
+                    for(var i = files.Length - 2; i >= 0; i--)
+                    {
+                        var file = files[i];
+                        var chunk=Chunk.FromCompletedFile()
+                    }
                 }
             }
         }
