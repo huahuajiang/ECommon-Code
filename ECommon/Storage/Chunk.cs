@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ECommon.Storage
 {
@@ -118,7 +119,7 @@ namespace ECommon.Storage
 
         #endregion
 
-        #region InitMethods
+        #region Init Methods
 
         private void InitCompleted()
         {
@@ -140,6 +141,270 @@ namespace ECommon.Storage
                     CheckCompleteFileChunk();
                 }
             }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public bool TryCacheInMemory(bool shouldCacheNextChunk)
+        {
+            lock (_cacheSyncObj)
+            {
+                if(!_chunkConfig.EnableCache||_isMemoryChunk||!_isCompleted|| _memoryChunk != null)
+                {
+                    _cachingChunk = 0;
+                    return false;
+                }
+
+                try
+                {
+                    var cachedFileChunks = _chunkManager.GetCachedFileChunks();
+                    if (cachedFileChunks.Count >= _chunkConfig.ChunkCacheMaxCount)
+                    {
+                        return false;
+                    }
+                    _memoryChunk = FromCompletedFile(_filename, _chunkManager, _chunkConfig, true);
+                    if (shouldCacheNextChunk)
+                    {
+                        Task.Factory.StartNew(() => _chunkManager.TryCacheNextChunk(this));
+                    }
+                    return true;
+                }
+                catch (OutOfMemoryException) { return false; }
+                catch (Exception ex)
+                {
+                    _logger.Error(string.Format("Failed to cache completed chunk {0}", this), ex);
+                    return false;
+                }
+                finally
+                {
+                    _cachingChunk = 0;
+                }
+            }
+        }
+
+        public bool UnCacheFromMemory()
+        {
+            lock (_cacheSyncObj)
+            {
+                if(!_chunkConfig.EnableCache||_isMemoryChunk||!_isCompleted|| _memoryChunk == null)
+                {
+                    return false;
+                }
+
+                try
+                {
+                    var memoryChunk = _memoryChunk;
+                    _memoryChunk = null;
+                    memoryChunk.Dispose();
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    _logger.Error(string.Format("Failed to uncache completed chunk {0}", this), ex);
+                    return false;
+                }
+            }
+        }
+
+        public T TryReadAt<T>(long dataPosition,Func<byte[],T> readRecordFunc,bool autoCache=true) where T : class, ILogRecord
+        {
+            if (_isDestroying)
+            {
+                throw new ChunkReadException(string.Format("Chunk {0} is being deleting.", this));
+            }
+
+            _lastActiveTime = DateTime.Now;
+
+            if (!_isMemoryChunk)
+            {
+                if (_cacheItems != null)
+                {
+                    var index = dataPosition % _chunkConfig.ChunkLocalCacheSize;
+                    var cacheItem = _cacheItems[index];
+                    if (cacheItem != null)
+                    {
+                        var record = readRecordFunc(cacheItem.RecordBuffer);
+                        if (record == null)
+                        {
+                            throw new ChunkReadException(
+                                string.Format("Cannot read a record from data position {0}. Something is seriously wrong in chunk {1}.",
+                                              dataPosition, this));
+                        }
+                        if (_chunkConfig.EnableChunkStatistic)
+                        {
+                            _chunkManager.AddCachedReadCount(ChunkHeader.ChunkNumber);
+                        }
+                        return record;
+                    }
+                }
+                else if (_memoryChunk != null)
+                {
+                    var record = _memoryChunk.TryReadAt(dataPosition, readRecordFunc);
+                    if (record != null && _chunkConfig.EnableChunkStatistic)
+                    {
+                        _chunkManager.AddUnmanagedReadCount(ChunkHeader.ChunkNumber);
+                    }
+                    return record;
+                }
+            }
+
+            if(_chunkConfig.EnableCache&&autoCache&&!_isMemoryChunk&&_isCompleted&&Interlocked.CompareExchange(ref _cachingChunk, 1, 0) == 0)
+            {
+                Task.Factory.StartNew(() => TryCacheInMemory(true));
+            }
+
+            var readerWorkItem = GetReaderWorkItem();
+            try
+            {
+                var currentDataPosition = DataPosition;
+                if (dataPosition >= currentDataPosition)
+                {
+                    return null;
+                }
+
+                try
+                {
+                    var record=IsFixedDataSize()?
+                        TryReadFixedSizeForwardInternal(readerWorkItem, dataPosition, readRecordFunc) :
+                        TryReadForwardInternal(readerWorkItem, dataPosition, readRecordFunc);
+                    if (!_isMemoryChunk && _chunkConfig.EnableChunkStatistic)
+                    {
+                        _chunkManager.AddFileReadCount(ChunkHeader.ChunkNumber);
+                    }
+                    return record;
+                }
+                catch
+                {
+                    if (!_isMemoryChunk && _writerWorkItem != null && _writerWorkItem.LastFlushedPosition < GetStreamPosition(_dataPosition))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            finally
+            {
+                ReturnReaderWorkItem(readerWorkItem);
+            }
+        }
+
+        public RecordWriteResult TryAppend(ILogRecord record)
+        {
+            if (_isCompleted)
+            {
+                throw new ChunkWriteException(this.ToString(), string.Format("Cannot write to a read-only chunk, isMemoryChunk: {0}, _dataPosition: {1}", _isMemoryChunk, _dataPosition));
+            }
+
+            _lastActiveTime = DateTime.Now;
+
+            var writerWorkItem = _writerWorkItem;
+            var bufferStream = writerWorkItem.BufferStream;
+            var bufferWriter = writerWorkItem.BufferWriter;
+            var recordBuffer = default(byte[]);
+
+            if (IsFixedDataSize())
+            {
+                if (writerWorkItem.WorkingStream.Position + _chunkConfig.ChunkDataUnitSize > ChunkHeader.Size + _chunkHeader.ChunkDataTotalSize)
+                {
+                    return RecordWriteResult.NotEnoughSpace();
+                }
+                bufferStream.Position = 0;
+                record.WriteTo(GlobalDataPosition, bufferWriter);
+                var recordLength = (int)bufferStream.Length;
+                if (recordLength != _chunkConfig.ChunkDataUnitSize)
+                {
+                    throw new ChunkWriteException(this.ToString(), string.Format("Invalid fixed data length, expected length {0}, but was {1}", _chunkConfig.ChunkDataUnitSize, recordLength));
+                }
+
+                if (_cacheItems != null)
+                {
+                    recordBuffer = new byte[recordLength];
+                    Buffer.BlockCopy(bufferStream.GetBuffer(), 0, recordBuffer, 0, recordLength);
+                }
+            }
+            else
+            {
+                bufferStream.SetLength(4);
+                bufferStream.Position = 4;
+                record.WriteTo(GlobalDataPosition, bufferWriter);
+                var recordLength = (int)bufferStream.Length - 4;
+                bufferWriter.Write(recordLength);
+                bufferStream.Position = 0;
+                bufferWriter.Write(recordLength);
+
+                if (recordLength > _chunkConfig.MaxLogRecordSize)
+                {
+                    throw new ChunkWriteException(this.ToString(),
+                        string.Format("Log record at data position {0} has too large length: {1} bytes, while limit is {2} bytes",
+                                      _dataPosition, recordLength, _chunkConfig.MaxLogRecordSize));
+                }
+
+                if(writerWorkItem.WorkingStream.Position+ recordLength + 2 * sizeof(int) > ChunkHeader.Size + _chunkHeader.ChunkDataTotalSize)
+                {
+                    return RecordWriteResult.NotEnoughSpace();
+                }
+
+                if (_cacheItems != null)
+                {
+                    recordBuffer = new byte[recordLength];
+                    Buffer.BlockCopy(bufferStream.GetBuffer(), 4, recordBuffer, 0, recordLength);
+                }
+            }
+
+            var writtenPosition = _dataPosition;
+            var buffer = bufferStream.GetBuffer();
+
+            lock (_writeSyncObj)
+            {
+                writerWorkItem.AppendData(buffer, 0, (int)bufferStream.Length);
+            }
+
+            _dataPosition = (int)writerWorkItem.WorkingStream.Position - ChunkHeader.Size;
+
+            var position = ChunkHeader.ChunkDataStartPosition + writtenPosition;
+
+            if (_chunkConfig.EnableCache)
+            {
+                if (_memoryChunk != null)
+                {
+                    var result = _memoryChunk.TryAppend(record);
+                    if (!result.Success)
+                    {
+                        throw new ChunkWriteException(this.ToString(), "Append record to file chunk success, but append to memory chunk failed as memory space not enough, this should not be happened.");
+                    }
+                    else if(result.Position!= position)
+                    {
+                        throw new ChunkWriteException(this.ToString(), string.Format("Append record to file chunk success, and append to memory chunk success, but the position is not equal, memory chunk write position: {0}, file chunk write position: {1}.", result.Position, position));
+                    }
+                }
+                else if (_cacheItems != null && recordBuffer != null)
+                {
+                    var index = writtenPosition % _chunkConfig.ChunkLocalCacheSize;
+                    _cacheItems[index] = new CacheItem { RecordPosition = writtenPosition, RecordBuffer = recordBuffer };
+                }
+            }
+            else if(_cacheItems!=null && recordBuffer != null)
+            {
+                var index = writtenPosition % _chunkConfig.ChunkLocalCacheSize;
+                _cacheItems[index] = new CacheItem { RecordPosition = writtenPosition, RecordBuffer = recordBuffer };
+            }
+
+            if (!_isMemoryChunk && _chunkConfig.EnableChunkStatistic)
+            {
+                _chunkManager.AddWriteBytes(ChunkHeader.ChunkNumber, (int)bufferStream.Length);
+            }
+
+            return RecordWriteResult.Successful(position);
+        }
+
+        public void WriteBloomFilter(string minKey,string maxKey,byte[] bloomFilterBytes)
+        {
+
         }
 
         #endregion
@@ -338,6 +603,257 @@ namespace ECommon.Storage
             }
 
             return footer;
+        }
+
+        private ChunkHeader ReadHeader(FileStream stream,BinaryReader reader)
+        {
+            if (stream.Length < ChunkHeader.Size)
+            {
+                throw new Exception(string.Format("Chunk file '{0}' is too short to even read ChunkHeader, its size is {1} bytes.", _filename, stream.Length));
+            }
+            //Seek:将此流的当前位置设置为给定值
+            stream.Seek(0, SeekOrigin.Begin);
+            return ChunkHeader.FromStream(reader);
+        }
+
+        private ChunkFooter ReadFooter(FileStream stream,BinaryReader reader)
+        {
+            if (stream.Length < ChunkFooter.Size)
+            {
+                throw new Exception(string.Format("Chunk file '{0}' is too short to even read ChunkFooter, its size is {1} bytes.", _filename, stream.Length));
+            }
+            stream.Seek(-ChunkFooter.Size, SeekOrigin.End);
+            return ChunkFooter.FromStream(reader);
+        }
+
+        private T TryReadForwardInternal<T>(ReaderWorkItem readerWorkItem,long dataPosition,Func<byte[],T> readRecordFunc) where T : ILogRecord
+        {
+            lock (_freeMemoryObj)
+            {
+                if (_isMemoryFreed)
+                {
+                    return default(T);
+                }
+                var currentDataPosition = DataPosition;
+
+                if (dataPosition + 2 * sizeof(int) > currentDataPosition)
+                {
+                    throw new ChunkReadException(
+                        string.Format("No enough space even for length prefix and suffix, data position: {0}, max data position: {1}, chunk: {2}",
+                                      dataPosition, currentDataPosition, this));
+                }
+
+                readerWorkItem.Stream.Position = GetStreamPosition(dataPosition);
+
+                var length = readerWorkItem.Reader.ReadInt32();
+                if (length <= 0)
+                {
+                    throw new ChunkReadException(
+                        string.Format("Log record at data position {0} has non-positive length: {1} in chunk {2}",
+                                      dataPosition, length, this));
+                }
+                if (length > _chunkConfig.MaxLogRecordSize)
+                {
+                    throw new ChunkReadException(
+                        string.Format("Log record at data position {0} has too large length: {1} bytes, while limit is {2} bytes, in chunk {3}",
+                                      dataPosition, length, _chunkConfig.MaxLogRecordSize, this));
+                }
+                if (dataPosition + length + 2 * sizeof(int) > currentDataPosition)
+                {
+                    throw new ChunkReadException(
+                        string.Format("There is not enough space to read full record (length prefix: {0}), data position: {1}, max data position: {2}, chunk: {3}",
+                                      length, dataPosition, currentDataPosition, this));
+                }
+
+                var recordBuffer = readerWorkItem.Reader.ReadBytes(length);
+                var record = readRecordFunc(recordBuffer);
+                if (record == null)
+                {
+                    throw new ChunkReadException(
+                        string.Format("Cannot read a record from data position {0}. Something is seriously wrong in chunk {1}.",
+                                      dataPosition, this));
+                }
+
+                int suffixLength = readerWorkItem.Reader.ReadInt32();
+                if (suffixLength != length)
+                {
+                    throw new ChunkReadException(
+                        string.Format("Prefix/suffix length inconsistency: prefix length({0}) != suffix length ({1}), data position: {2}. Something is seriously wrong in chunk {3}.",
+                                      length, suffixLength, dataPosition, this));
+                }
+
+                return record;
+            }
+        }
+
+        private T TryReadFixedSizeForwardInternal<T>(ReaderWorkItem readerWorkItem, long dataPosition, Func<byte[], T> readRecordFunc) where T : ILogRecord
+        {
+            lock (_freeMemoryObj)
+            {
+                if (_isMemoryFreed)
+                {
+                    return default(T);
+                }
+                var currentDataPosition = DataPosition;
+
+                if (dataPosition + _chunkConfig.ChunkDataUnitSize > currentDataPosition)
+                {
+                    throw new ChunkReadException(
+                        string.Format("No enough space for fixed data record, data position: {0}, max data position: {1}, chunk: {2}",
+                                      dataPosition, currentDataPosition, this));
+                }
+
+                var startStreamPosition = GetStreamPosition(dataPosition);
+                readerWorkItem.Stream.Position = startStreamPosition;
+
+                var recordBuffer = readerWorkItem.Reader.ReadBytes(_chunkConfig.ChunkDataUnitSize);
+                var record = readRecordFunc(recordBuffer);
+                if (record == null)
+                {
+                    throw new ChunkReadException(
+                            string.Format("Read fixed record from data position: {0} failed, max data position: {1}. Something is seriously wrong in chunk {2}",
+                                          dataPosition, currentDataPosition, this));
+                }
+
+                var recordLength = readerWorkItem.Stream.Position - startStreamPosition;
+                if (recordLength != _chunkConfig.ChunkDataUnitSize)
+                {
+                    throw new ChunkReadException(
+                            string.Format("Invalid fixed record length, expected length {0}, but was {1}, dataPosition: {2}. Something is seriously wrong in chunk {3}",
+                                          _chunkConfig.ChunkDataUnitSize, recordLength, dataPosition, this));
+                }
+
+                return record;
+            }
+        }
+
+        private bool TryParsingDataPosition<T>(Func<byte[],T> readRecordFunc,out ChunkHeader chunkHeader,out int dataPosition) where T : ILogRecord
+        {
+            using (var fileStream = new FileStream(_filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, _chunkConfig.ChunkReadBuffer, FileOptions.None))
+            {
+                using (var reader = new BinaryReader(fileStream))
+                {
+                    chunkHeader = ReadHeader(fileStream, reader);
+
+                    fileStream.Position = ChunkHeader.Size;
+
+                    var startStreamPosition = fileStream.Position;
+                    var maxStreamPosition = fileStream.Length - ChunkFooter.Size;
+                    var isFixedDataSize = IsFixedDataSize();
+
+                    while (fileStream.Position < maxStreamPosition)
+                    {
+                        var success = false;
+                        if (isFixedDataSize)
+                        {
+                            success = TryReadFixedSizeRecord(fileStream, reader, maxStreamPosition, readRecordFunc);
+                        }
+                        else
+                        {
+                            success = TryReadRecord(fileStream, reader, maxStreamPosition, readRecordFunc);
+                        }
+
+                        if (success)
+                        {
+                            startStreamPosition = fileStream.Position;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    if (startStreamPosition != fileStream.Position)
+                    {
+                        fileStream.Position = startStreamPosition;
+                    }
+
+                    dataPosition = (int)fileStream.Position - ChunkHeader.Size;
+
+                    return true;
+                }
+            }
+        }
+
+        private bool TryReadRecord<T>(FileStream stream,BinaryReader reader,long maxStreamPosition,Func<byte[],T> readRecordFunc) where T : ILogRecord
+        {
+            try
+            {
+                var startStreamPosition = stream.Position;
+                if (startStreamPosition + 2 * sizeof(int) > maxStreamPosition)
+                {
+                    return false;
+                }
+
+                var length = reader.ReadInt32();
+                if (startStreamPosition + length + 2 * sizeof(int) > maxStreamPosition)
+                {
+                    return false;
+                }
+                if (startStreamPosition + length + 2 * sizeof(int) > maxStreamPosition)
+                {
+                    return false;
+                }
+
+                var recordBuffer = reader.ReadBytes(length);
+                var record = readRecordFunc(recordBuffer);
+                if (record == null)
+                {
+                    return false;
+                }
+
+                int suffixLength = reader.ReadInt32();
+                if (suffixLength != length)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool TryReadFixedSizeRecord<T>(FileStream stream, BinaryReader reader,long maxStreamPosition,Func<byte[],T> readRecordFunc) where T : ILogRecord
+        {
+            try
+            {
+                var startStreamPosition = stream.Position;
+                if (startStreamPosition + _chunkConfig.ChunkDataUnitSize > maxStreamPosition)
+                {
+                    return false;
+                }
+                var recordBuffer = reader.ReadBytes(_chunkConfig.ChunkDataUnitSize);
+                var record = readRecordFunc(recordBuffer);
+                if (record == null)
+                {
+                    return false;
+                }
+
+                var recordLength = stream.Position - startStreamPosition;
+                if (recordLength != _chunkConfig.ChunkDataUnitSize)
+                {
+                    _logger.ErrorFormat("Invalid fixed data length, expected length {0}, but was {1}", _chunkConfig.ChunkDataUnitSize, recordLength);
+                    return false;
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static long GetStreamPosition(long dataPosition)
+        {
+            return ChunkHeader.Size + dataPosition;
+        }
+
+        private void SetFileAttributes()
+        {
+            Helper.EatException(() => File.SetAttributes(_filename, FileAttributes.NotContentIndexed));
         }
 
         #endregion
