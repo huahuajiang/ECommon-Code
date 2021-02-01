@@ -114,12 +114,74 @@ namespace ECommon.Storage
         {
             var chunk = new Chunk(filename, chunkManager, config, isMemoryChunk);
 
-            try { chunk.Ini}
+            try
+            {
+                chunk.InitNew(chunkNumber);
+            }
+            catch (OutOfMemoryException)
+            {
+                chunk.Dispose();
+                throw;
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(string.Format("Chunk {0} create failed.", chunk), ex);
+                chunk.Dispose();
+                throw;
+            }
+
+            return chunk;
+        }
+
+        public static Chunk FromCompletedFile(string filename,ChunkManager chunkManager,ChunkManagerConfig config, bool isMemoryChunk)
+        {
+            var chunk = new Chunk(filename, chunkManager, config, isMemoryChunk);
+
+            try
+            {
+                chunk.InitCompleted();
+            }
+            catch (OutOfMemoryException)
+            {
+                chunk.Dispose();
+                throw;
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(string.Format("Chunk {0} init from completed file failed.", chunk), ex);
+                chunk.Dispose();
+                throw;
+            }
+
+            return chunk;
+        }
+
+        public static Chunk FromOngoingFile<T>(string filename,ChunkManager chunkManager,ChunkManagerConfig config,Func<byte[],T> readRecordFunc, bool isMemoryChunk) where T: ILogRecord
+        {
+            var chunk = new Chunk(filename, chunkManager, config, isMemoryChunk);
+
+            try
+            {
+                chunk.InitOngoing(readRecordFunc);
+            }
+            catch (OutOfMemoryException)
+            {
+                chunk.Dispose();
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(string.Format("Chunk {0} init from ongoing file failed.", chunk), ex);
+                chunk.Dispose();
+                throw;
+            }
+
+            return chunk;
         }
 
         #endregion
 
-        #region Init Methods
+            #region Init Methods
 
         private void InitCompleted()
         {
@@ -140,6 +202,236 @@ namespace ECommon.Storage
 
                     CheckCompleteFileChunk();
                 }
+            }
+
+            _dataPosition = _chunkFooter.ChunkDataTotalSize;
+            _flushedDataPosition = _chunkFooter.ChunkDataTotalSize;
+
+            if (_isMemoryChunk)
+            {
+                LoadFileChunkToMemory();
+            }
+            else
+            {
+                SetFileAttributes();
+            }
+
+            InitializeReaderWorkItems();
+
+            _lastActiveTime = DateTime.Now;
+        }
+
+        private void InitNew(int chunkNumber)
+        {
+            _chunkHeader = new ChunkHeader(chunkNumber, _chunkConfig.GetChunkDataSize(), _chunkConfig.ChunkHeaderBloomFilterSize);
+
+            _isCompleted = false;
+
+            var fileSize = ChunkHeader.Size + _chunkHeader.ChunkDataTotalSize + _chunkHeader.BloomFilterSize + ChunkFooter.Size;
+
+            var writeStream = default(Stream);
+            var tempFilename = string.Format("{0}.{1}.tmp", _filename, Guid.NewGuid());
+            var tempFileStream = default(FileStream);
+
+            try
+            {
+                if (_isMemoryChunk)
+                {
+                    _cachedLength = fileSize;
+                    _cachedData = Marshal.AllocHGlobal(_cachedLength);
+                    writeStream = new UnmanagedMemoryStream((byte*)_cachedData, _cachedLength, _cachedLength, FileAccess.ReadWrite);
+                    writeStream.Write(_chunkHeader.AsByteArray(), 0, ChunkHeader.Size);
+                }
+                else
+                {
+                    var fileInfo = new FileInfo(_filename);
+                    if (fileInfo.Exists)
+                    {
+                        File.SetAttributes(_filename, FileAttributes.Normal);
+                        File.Delete(_filename);
+                    }
+
+                    tempFileStream = new FileStream(tempFilename, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.Read, _chunkConfig.ChunkWriteBuffer, FileOptions.None);
+                    tempFileStream.SetLength(fileSize);
+                    tempFileStream.Write(_chunkHeader.AsByteArray(), 0, ChunkHeader.Size);
+                    tempFileStream.Flush(true);
+                    tempFileStream.Close();
+
+                    File.Move(tempFilename, _filename);
+
+                    writeStream = new FileStream(_filename, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, _chunkConfig.ChunkWriteBuffer, FileOptions.SequentialScan);
+                    SetFileAttributes();
+                }
+
+                writeStream.Position = ChunkHeader.Size;
+
+                _dataPosition = 0;
+                _flushedDataPosition = 0;
+                _writerWorkItem = new WriterWorkItem(new ChunkFileStream(writeStream, _chunkConfig.FlushOption));
+
+                InitializeReaderWorkItems();
+
+                if (!_isMemoryChunk)
+                {
+                    if (_chunkConfig.EnableCache)
+                    {
+                        var cachedFileChunks = _chunkManager.GetCachedFileChunks();
+                        if (cachedFileChunks.Count < _chunkConfig.ChunkCacheMaxCount)
+                        {
+                            try
+                            {
+                                _memoryChunk = CreateNew(_filename, chunkNumber, _chunkManager, _chunkConfig, true);
+                            }
+                            catch (OutOfMemoryException)
+                            {
+                                _cacheItems = new CacheItem[_chunkConfig.ChunkLocalCacheSize];
+                            }
+                            catch(Exception ex)
+                            {
+                                _logger.Error(string.Format("Failed to cache new chunk {0}", this), ex);
+                                _cacheItems = new CacheItem[_chunkConfig.ChunkLocalCacheSize];
+                            }
+                        }
+                        else
+                        {
+                            _cacheItems = new CacheItem[_chunkConfig.ChunkLocalCacheSize];
+                        }
+                    }
+                    else
+                    {
+                        _cacheItems = new CacheItem[_chunkConfig.ChunkLocalCacheSize];
+                    }
+                }
+                else
+                {
+                    _cacheItems = new CacheItem[_chunkConfig.ChunkLocalCacheSize];
+                }
+            }
+            catch
+            {
+                if (!_isMemoryChunk)
+                {
+                    if (tempFileStream != null)
+                    {
+                        Helper.EatException(() => tempFileStream.Close());
+                    }
+                    if (File.Exists(tempFilename))
+                    {
+                        Helper.EatException(() =>
+                        {
+                            File.SetAttributes(tempFilename, FileAttributes.Normal);
+                            File.Delete(tempFilename);
+                        });
+                    }
+                }
+                throw;
+            }
+
+            _lastActiveTime = DateTime.Now;
+        }
+
+        private void InitOngoing<T>(Func<byte[],T> readRecordFunc) where T : ILogRecord
+        {
+            var fileInfo = new FileInfo(_filename);
+            if (!fileInfo.Exists)
+            {
+                throw new ChunkFileNotExistException(_filename);
+            }
+
+            _isCompleted = false;
+
+            if(!TryParsingDataPosition(readRecordFunc,out _chunkHeader,out _dataPosition))
+            {
+                throw new ChunkBadDataException(string.Format("Failed to parse chunk data, chunk file: {0}", _filename));
+            }
+
+            _flushedDataPosition = _dataPosition;
+
+            var writeStream = default(Stream);
+
+            if (_isMemoryChunk)
+            {
+                var fileSize = ChunkHeader.Size + _chunkHeader.ChunkDataTotalSize + _chunkHeader.BloomFilterSize + ChunkFooter.Size;
+                _cachedLength = fileSize;
+                _cachedData = Marshal.AllocHGlobal(_cachedLength);
+                writeStream = new UnmanagedMemoryStream((byte*)_cachedData, _cachedLength, _cachedLength, FileAccess.ReadWrite);
+
+                writeStream.Write(_chunkHeader.AsByteArray(), 0, ChunkHeader.Size);
+
+                if (_dataPosition > 0)
+                {
+                    using(var fileStream=new FileStream(_filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 8192, FileOptions.SequentialScan))
+                    {
+                        fileStream.Seek(ChunkHeader.Size, SeekOrigin.Begin);
+                        var buffer = new byte[65536];
+                        int toReadBytes = _dataPosition;
+
+                        while (toReadBytes > 0)
+                        {
+                            int read = fileStream.Read(buffer, 0, Math.Min(toReadBytes, buffer.Length));
+                            if (read == 0)
+                            {
+                                break;
+                            }
+                            toReadBytes -= read;
+                            writeStream.Write(buffer, 0, read);
+                        }
+                    }
+                }
+
+                if (writeStream.Position != GetStreamPosition(_dataPosition))
+                {
+                    throw new InvalidOperationException(string.Format("UnmanagedMemoryStream position incorrect, expect: {0}, but: {1}", _dataPosition + ChunkHeader.Size, writeStream.Position));
+                }
+            }
+            else
+            {
+                writeStream = new FileStream(_filename, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, _chunkConfig.ChunkWriteBuffer, FileOptions.SequentialScan);
+                writeStream.Position = GetStreamPosition(_dataPosition);
+                SetFileAttributes();
+            }
+
+            _writerWorkItem = new WriterWorkItem(new ChunkFileStream(writeStream, _chunkConfig.FlushOption));
+
+            InitializeReaderWorkItems();
+
+            if (!_isMemoryChunk)
+            {
+                if (_chunkConfig.EnableCache)
+                {
+                    var cachedFileChunks = _chunkManager.GetCachedFileChunks();
+                    if (cachedFileChunks.Count < _chunkConfig.ChunkCacheMaxCount)
+                    {
+                        try
+                        {
+                            _memoryChunk = FromOngoingFile(_filename, _chunkManager, _chunkConfig, readRecordFunc, true);
+                        }
+                        catch (OutOfMemoryException)
+                        {
+                            _cacheItems = new CacheItem[_chunkConfig.ChunkLocalCacheSize];
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.Error(string.Format("Failed to cache ongoing chunk {0}", this), ex);
+                            _cacheItems = new CacheItem[_chunkConfig.ChunkLocalCacheSize];
+                        }
+                    }
+                    else
+                    {
+                        _cacheItems = new CacheItem[_chunkConfig.ChunkLocalCacheSize];
+                    }
+                }
+                else
+                {
+                    _cacheItems = new CacheItem[_chunkConfig.ChunkLocalCacheSize];
+                }
+            }
+
+            _lastActiveTime = DateTime.Now;
+
+            if (!_isMemoryChunk)
+            {
+                _logger.InfoFormat("Ongoing chunk {0} initialized, _dataPosition: {1}", this, _dataPosition);
             }
         }
 
@@ -404,7 +696,145 @@ namespace ECommon.Storage
 
         public void WriteBloomFilter(string minKey,string maxKey,byte[] bloomFilterBytes)
         {
+            if (_chunkHeader.BloomFilterSize <= 0)
+            {
+                throw new ChunkWriteException(ToString(), "Chunk header bloom filter size is not configed, so we cannot write bloom filter.");
+            }
+            if (bloomFilterBytes.Length > _chunkHeader.BloomFilterSize)
+            {
+                throw new ChunkWriteException(ToString(), string.Format("Bloom filter bytes exceed max size, bytes size: {0}, maxSize: {1}", bloomFilterBytes.Length, _chunkHeader.BloomFilterSize));
+            }
 
+            var minKeyBytes = Encoding.UTF8.GetBytes(minKey);
+            var maxKeyBytes = Encoding.UTF8.GetBytes(maxKey);
+            var bloomFilter = new byte[_chunkHeader.BloomFilterSize + sizeof(int) * 3 + minKeyBytes.Length + maxKeyBytes.Length];
+            using (var stream = new MemoryStream(bloomFilter))
+            {
+                using (var writer = new BinaryWriter(stream))
+                {
+                    writer.Write(minKeyBytes.Length);
+                    writer.Write(minKeyBytes);
+
+                    writer.Write(maxKeyBytes.Length);
+                    writer.Write(maxKeyBytes);
+
+                    writer.Write(bloomFilterBytes.Length);
+                    writer.Write(bloomFilterBytes);
+                }
+            }
+            _writerWorkItem.AppendData(bloomFilter, 0, bloomFilter.Length);
+            _bloomFilterSize = bloomFilter.Length;
+        }
+
+        public void Flush()
+        {
+            if (_isMemoryChunk || _isCompleted) return;
+            if (_writerWorkItem != null)
+            {
+                Helper.EatException(() => _writerWorkItem.FlushToDisk());
+            }
+        }
+
+        public void Complete()
+        {
+            lock (_writeSyncObj)
+            {
+                if (_isCompleted) return;
+
+                _chunkFooter = WriteFooter();
+                if (!_isMemoryChunk)
+                {
+                    Flush();
+                }
+
+                _isCompleted = true;
+
+                if (_writerWorkItem != null)
+                {
+                    Helper.EatException(() => _writerWorkItem.Dispose());
+                    _writerWorkItem = null;
+                }
+
+                if (!_isMemoryChunk)
+                {
+                    if (_cacheItems != null)
+                    {
+                        _cacheItems = null;
+                    }
+
+                    SetFileAttributes();
+                    if (_memoryChunk != null)
+                    {
+                        _memoryChunk.Complete();
+                    }
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            Close();
+        }
+
+        public void Close()
+        {
+            lock (_writeSyncObj)
+            {
+                if (!_isCompleted)
+                {
+                    Flush();
+                }
+
+                if (_writerWorkItem != null)
+                {
+                    Helper.EatException(() => _writerWorkItem.Dispose());
+                    _writerWorkItem = null;
+                }
+
+                if (_isMemoryChunk)
+                {
+                    if (_cacheItems != null)
+                    {
+                        _cacheItems = null;
+                    }
+                }
+
+                CloseAllReaderWorkItems();
+                FreeMemory();
+            }
+        }
+
+        public void Destroy()
+        {
+            if (_isMemoryChunk)
+            {
+                FreeMemory();
+                return;
+            }
+
+            //检查当前chunk是否已完成
+            if (!_isCompleted)
+            {
+                throw new InvalidOperationException(string.Format("Not allowed to delete a incompleted chunk {0}", this));
+            }
+
+            //首先设置删除标记
+            _isDestroying = true ;
+
+            if (_cacheItems != null)
+            {
+                _cacheItems = null;
+            }
+
+            //释放缓存得内存
+            UnCacheFromMemory();
+
+            //关闭所有的ReaderWorkItem
+            CloseAllReaderWorkItems();
+
+            //删除Chunk文件
+            File.SetAttributes(_filename, FileAttributes.Normal);
+            File.Delete(_filename);
         }
 
         #endregion

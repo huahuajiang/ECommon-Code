@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ECommon.Storage
 {
@@ -114,11 +115,91 @@ namespace ECommon.Storage
                     for(var i = files.Length - 2; i >= 0; i--)
                     {
                         var file = files[i];
-                        var chunk=Chunk.FromCompletedFile()
+                        var chunk= Chunk.FromCompletedFile(file, this, _config, _isMemoryMode);
+                        if (_config.EnableCache && cachedChunkCount < _config.PreCacheChunkCount)
+                        {
+                            if (chunk.TryCacheInMemory(false))
+                            {
+                                cachedChunkCount++;
+                            }
+                        }
+                        AddChunk(chunk);
                     }
+                    var lastFile = files[files.Length - 1];
+                    AddChunk(Chunk.FromOngoingFile(lastFile, this, _config, readRecordFunc, _isMemoryMode));
+                }
+
+                if (_config.EnableCache)
+                {
+                    _scheduleService.StartTask("UncacheChunks", () => UncacheChunks(), 1000, 1000);
                 }
             }
         }
+
+
+        public int GetChunkCount()
+        {
+            return _chunks.Count;
+        }
+
+        public IList<Chunk> GetAllChunks()
+        {
+            return _chunks.Values.ToList();
+        }
+
+        public Chunk AddNewChunk()
+        {
+            lock (_lockObj)
+            {
+                var chunkNumber = _nextChunkNumber;
+                var chunkFileName = _config.FileNamingStrategy.GetFileNameFor(_chunkPath, chunkNumber);
+                var chunk = Chunk.CreateNew(chunkFileName, chunkNumber, this, _config, _isMemoryMode);
+
+                AddChunk(chunk);
+
+                return chunk;
+            }
+        }
+
+        public Chunk GetFirstChunk()
+        {
+            lock (_lockObj)
+            {
+                var chunkNumber = _nextChunkNumber;
+                var chunkFileName = _config.FileNamingStrategy.GetFileNameFor(_chunkPath, chunkNumber);
+                var chunk = Chunk.CreateNew(chunkFileName, chunkNumber, this, _config, _isMemoryMode);
+
+                AddChunk(chunk);
+
+                return chunk;
+            }
+        }
+
+        public Chunk GetFirstChunk()
+        {
+            lock (_lockObj)
+            {
+                if (_chunks.Count == 0)
+                {
+                    AddNewChunk();
+                }
+                var minChunkNum = _chunks.Keys.Min();
+                return _chunks[minChunkNum];
+            }
+        }
+
+        public Chunk GetLastChunk()
+        {
+            lock (_lockObj)
+            {
+                if (_chunks.Count == 0)
+                {
+                    AddNewChunk();
+                }
+                return _chunks[_nextChunkNumber - 1];
+            }
+        }
+
 
     }
 }
