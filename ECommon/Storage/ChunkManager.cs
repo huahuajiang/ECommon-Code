@@ -8,6 +8,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ECommon.Storage
 {
@@ -23,7 +25,7 @@ namespace ECommon.Storage
         private int _nextChunkNumber;
         private int _uncachingChunks;
         private int _isCachingNextChunk;
-        private ConcurrentDictionary<int, BytesInfo> _byteWriteDict;
+        private ConcurrentDictionary<int, BytesInfo> _bytesWriteDict;
         private ConcurrentDictionary<int, CountInfo> _fileReadDict;
         private ConcurrentDictionary<int, CountInfo> _unmanagedReadDict;
         private ConcurrentDictionary<int, CountInfo> _cachedReadDict;
@@ -165,20 +167,6 @@ namespace ECommon.Storage
         {
             lock (_lockObj)
             {
-                var chunkNumber = _nextChunkNumber;
-                var chunkFileName = _config.FileNamingStrategy.GetFileNameFor(_chunkPath, chunkNumber);
-                var chunk = Chunk.CreateNew(chunkFileName, chunkNumber, this, _config, _isMemoryMode);
-
-                AddChunk(chunk);
-
-                return chunk;
-            }
-        }
-
-        public Chunk GetFirstChunk()
-        {
-            lock (_lockObj)
-            {
                 if (_chunks.Count == 0)
                 {
                     AddNewChunk();
@@ -200,6 +188,97 @@ namespace ECommon.Storage
             }
         }
 
+        public int GetChunkNum(long dataPosition)
+        {
+            return (int)(dataPosition / _config.GetChunkDataSize());
+        }
 
+        public Chunk GetChunkFor(long dataPosition)
+        {
+            var chunkNum = (int)(dataPosition / _config.GetChunkDataSize());
+            return GetChunk(chunkNum);
+        }
+
+        public Chunk GetChunk(int chunkNum)
+        {
+            if (_chunks.ContainsKey(chunkNum))
+            {
+                return _chunks[chunkNum];
+            }
+            return null;
+        }
+
+        public bool RemoveChunk(Chunk chunk)
+        {
+            lock (_lockObj)
+            {
+                if (_chunks.Remove(chunk.ChunkHeader.ChunkNumber))
+                {
+                    try
+                    {
+                        chunk.Destroy();
+                    }
+                    catch(Exception ex)
+                    {
+                        _logger.Error(string.Format("Destroy chunk {0} has exception.", chunk), ex);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public void TryCacheNextChunk(Chunk currentChunk)
+        {
+            if (!_config.EnableCache) return;
+
+            if(Interlocked.CompareExchange(ref _isCachingNextChunk, 1, 0) == 0)
+            {
+                try
+                {
+                    var nextChunkNumber = currentChunk.ChunkHeader.ChunkNumber + 1;
+                    var nextChunk = GetChunk(nextChunkNumber);
+                    if (nextChunk != null && !nextChunk.IsMemoryChunk && nextChunk.IsCompleted && !nextChunk.HasCachedChunk)
+                    {
+                        Task.Factory.StartNew(() => nextChunk.TryCacheInMemory(false));
+                    }
+                }
+                finally
+                {
+                    Interlocked.Exchange(ref _isCachingNextChunk, 0);
+                }
+            }
+        }
+
+        public void Start()
+        {
+            if (_config.EnableChunkStatistic)
+            {
+                _scheduleService.StartTask("LogChunkStatisticStatus", LogChunkStatisticStatus, 1000, 1000);
+            }
+        }
+
+        public void Shutdown()
+        {
+            if (_config.EnableChunkStatistic)
+            {
+                _scheduleService.StopTask("LogChunkStatisticStatus");
+            }
+        }
+
+        public void AddWriteBytes(int chunkNum,int byteCount)
+        {
+            _bytesWriteDict.AddOrUpdate(chunkNum, GetDefaultBytesInfo, (chunkNumber, current) => UpfateBytesInfo(chunkNumber, current, byteCount));
+        }
+
+        public void AddFileReadCount(int chunkNum)
+        {
+            _fileReadDict.AddOrUpdate(chunkNum, GetDefaultCountInfo, UpdateCountInfo);
+        }
+
+        public void AddUnmanageReadCount(int chunkNum)
+        {
+
+        }
     }
 }
