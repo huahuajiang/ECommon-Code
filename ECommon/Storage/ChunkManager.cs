@@ -1,9 +1,9 @@
 ﻿using ECommon.Components;
+using ECommon.Extensions;
 using ECommon.Logging;
 using ECommon.Scheduling;
 using ECommon.Utilities;
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -59,7 +59,7 @@ namespace ECommon.Storage
         public string Name { get; private set; }
         public ChunkManagerConfig Config { get { return _config; } }
         public string ChunkPath { get { return _chunkPath; } }
-        public bool IsMemory { get { return _isMemoryMode; } }
+        public bool IsMemoryMode { get { return _isMemoryMode; } }
         public ChunkManager(string name,ChunkManagerConfig config,bool isMemoryMode,IEnumerable<string> relativePaths = null)
         {
             Ensure.NotNull(name, "name");
@@ -87,7 +87,7 @@ namespace ECommon.Storage
             }
             _chunks = new ConcurrentDictionary<int, Chunk>();
             _scheduleService = ObjectContainer.Resolve<IScheduleService>();
-            _byteWriteDict = new ConcurrentDictionary<int, BytesInfo>();
+            _bytesWriteDict = new ConcurrentDictionary<int, BytesInfo>();
             _fileReadDict = new ConcurrentDictionary<int, CountInfo>();
             _unmanagedReadDict = new ConcurrentDictionary<int, CountInfo>();
             _cachedReadDict = new ConcurrentDictionary<int, CountInfo>();
@@ -268,7 +268,7 @@ namespace ECommon.Storage
 
         public void AddWriteBytes(int chunkNum,int byteCount)
         {
-            _bytesWriteDict.AddOrUpdate(chunkNum, GetDefaultBytesInfo, (chunkNumber, current) => UpfateBytesInfo(chunkNumber, current, byteCount));
+            _bytesWriteDict.AddOrUpdate(chunkNum, GetDefaultBytesInfo, (chunkNumber, current) => UpdateBytesInfo(chunkNumber, current, byteCount));
         }
 
         public void AddFileReadCount(int chunkNum)
@@ -276,9 +276,184 @@ namespace ECommon.Storage
             _fileReadDict.AddOrUpdate(chunkNum, GetDefaultCountInfo, UpdateCountInfo);
         }
 
-        public void AddUnmanageReadCount(int chunkNum)
+        public void AddUnmanagedReadCount(int chunkNum)
         {
+            _unmanagedReadDict.AddOrUpdate(chunkNum, GetDefaultCountInfo, UpdateCountInfo);
+        }
 
+        public void AddCachedReadCount(int chunkNum)
+        {
+            _cachedReadDict.AddOrUpdate(chunkNum, GetDefaultCountInfo, UpdateCountInfo);
+        }
+
+        public IList<Chunk> GetCachedFileChunks(bool checkIsCompleted = false, bool checkInactive = false)
+        {
+            return _chunks.Values.Where(x => (!checkIsCompleted || x.IsCompleted) && !x.IsMemoryChunk && x.HasCachedChunk && (!checkInactive || (DateTime.Now - x.LastActiveTime).TotalSeconds >= _config.ChunkInactiveTimeMaxSeconds)).OrderBy(x => x.LastActiveTime).ToList();
+        }
+
+        public void Dispose()
+        {
+            Close();
+        }
+
+        public void Close()
+        {
+            lock (_lockObj)
+            {
+                _scheduleService.StopTask("UncacheChunks");
+
+                foreach(var chunk in _chunks.Values)
+                {
+                    try
+                    {
+                        chunk.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(string.Format("Chunk {0} close failed.", chunk), ex);
+                    }
+                }
+            }
+        }
+
+        private void AddChunk(Chunk chunk)
+        {
+            _chunks.Add(chunk.ChunkHeader.ChunkNumber, chunk);
+            _nextChunkNumber = chunk.ChunkHeader.ChunkNumber + 1;
+        }
+
+        private int UncacheChunks()
+        {
+            var uncachedCount = 0;
+
+            if(Interlocked.CompareExchange(ref _uncachingChunks, 1, 0) == 0)
+            {
+                try
+                {
+                    var inactiveCachedFileChunks = GetCachedFileChunks(true, true);
+                    var maxUncacheCount = inactiveCachedFileChunks.Count - _config.ChunkCacheMinCount;
+                    if (maxUncacheCount <= 0)
+                    {
+                        return 0;
+                    }
+
+                    if (_logger.IsDebugEnabled)
+                    {
+                        _logger.DebugFormat("Current cached inactive file chunk count {0} exceed the chunkCacheMinCount {1}, try to uncache chunks.", inactiveCachedFileChunks.Count, _config.ChunkCacheMinCount);
+                    }
+
+                    foreach(var fileChunk in inactiveCachedFileChunks)
+                    {
+                        if (fileChunk.UnCacheFromMemory())
+                        {
+                            uncachedCount++;
+                            if (uncachedCount >= maxUncacheCount)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    if (_logger.IsDebugEnabled)
+                    {
+                        if (uncachedCount > 0)
+                        {
+                            _logger.DebugFormat("Uncached {0} chunks", uncachedCount);
+                        }
+                        else
+                        {
+                            _logger.Debug("No chunks uncached.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error("Uncaching chunks has exception.", ex);
+                }
+                finally
+                {
+                    Interlocked.Exchange(ref _uncachingChunks, 0);
+                }
+            }
+
+            return uncachedCount;
+        }
+
+        private CountInfo GetDefaultCountInfo(int chunkNum)
+        {
+            return new CountInfo { CurrentCount = 1 };
+        }
+
+        private CountInfo UpdateCountInfo(int chunkNum,CountInfo countInfo)
+        {
+            Interlocked.Increment(ref countInfo.CurrentCount);
+            return countInfo;
+        }
+
+        private BytesInfo GetDefaultBytesInfo(int chunkNum)
+        {
+            return new BytesInfo();
+        }
+
+        private BytesInfo UpdateBytesInfo(int chunkNum, BytesInfo bytesInfo, int bytesAdd)
+        {
+            Interlocked.Add(ref bytesInfo.CurrentBytes, bytesAdd);
+            return bytesInfo;
+        }
+
+        private void LogChunkStatisticStatus()
+        {
+            if (_logger.IsDebugEnabled)
+            {
+                var bytesWriteStatus = UpdateWriteStatus(_bytesWriteDict);
+                var unmanagedReadStatus = UpdateReadStatus(_unmanagedReadDict);
+                var fileReadStatus = UpdateReadStatus(_fileReadDict);
+                var cachedReadStatus = UpdateReadStatus(_cachedReadDict);
+                _logger.DebugFormat("{0}, maxChunk:#{1}, write:{2}, unmanagedCacheRead:{3}, localCacheRead:{4}, fileRead:{5}", Name, GetLastChunk().ChunkHeader.ChunkNumber, bytesWriteStatus, unmanagedReadStatus, cachedReadStatus, fileReadStatus);
+            }
+        }
+
+        private string UpdateWriteStatus(ConcurrentDictionary<int,BytesInfo> dict)
+        {
+            var list = new List<string>();
+            var toRemoveKeys = new List<int>();
+
+            foreach(var entry in dict)
+            {
+                var chunkNum = entry.Key;
+                var throughput = entry.Value.UpgradeBytes() / 1024;
+                if (throughput > 0)
+                {
+                    list.Add(string.Format("[chunk:#{0},bytes:{1}KB]", chunkNum, throughput));
+                }
+                else
+                {
+                    toRemoveKeys.Add(chunkNum);
+                }
+            }
+            foreach (var key in toRemoveKeys)
+            {
+                _bytesWriteDict.Remove(key);
+            }
+
+            return list.Count == 0 ? "[]" : string.Join(",", list);
+        }
+
+        private string UpdateReadStatus(ConcurrentDictionary<int, CountInfo> dict)
+        {
+            var list = new List<string>();
+
+            foreach (var entry in dict)
+            {
+                var chunkNum = entry.Key;
+                var throughput = entry.Value.UpgradeCount();
+                if (throughput > 0)
+                {
+                    list.Add(string.Format("[chunk:#{0},count:{1}]", chunkNum, throughput));
+                }
+            }
+
+            return list.Count == 0 ? "[]" : string.Join(",", list);
         }
     }
 }
