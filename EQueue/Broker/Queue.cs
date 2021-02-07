@@ -1,4 +1,5 @@
-﻿using ECommon.Logging;
+﻿using ECommon.Components;
+using ECommon.Logging;
 using ECommon.Serializing;
 using ECommon.Storage;
 using EQueue.Protocols.Brokers;
@@ -40,6 +41,10 @@ namespace EQueue.Broker
             QueueId = queueId;
             Key = new QueueKey(topic, queueId);
 
+            _jsonSerializer = ObjectContainer.Resolve<IJsonSerializer>();
+            _chunkManager = new ChunkManager(
+                "QueueChunk-" + Key.ToString(),
+                BrokerController.Instance.Setting.
         }
     }
 

@@ -23,6 +23,9 @@ namespace EQueue.Broker
         long GetQueueMinOffset(string topic, int queueId);
         void AddQueue(string topic);
         void DeleteQueue(string topic, int queueId);
-        void SetProducerVisible()
+        void SetProducerVisible(string topic, int queueId, bool visible);
+        IEnumerable<int> CreateTopic(string topic, int? initialQueueCount);
+        void DeleteTopic(string topic);
+        IEnumerable<Queue> GetQueues(string topic, bool autoCreate = false);
     }
 }

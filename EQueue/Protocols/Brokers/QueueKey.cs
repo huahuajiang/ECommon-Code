@@ -33,7 +33,29 @@ namespace EQueue.Protocols.Brokers
                 return false;
             }
 
+            var other = (QueueKey)obj;
 
+            return Topic == other.Topic && QueueId == other.QueueId;
+
+        }
+
+        public override int GetHashCode()
+        {
+            return (Topic + QueueId.ToString()).GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}@{1}", Topic, QueueId);
+        }
+
+        private static bool IsEqual(QueueKey left,QueueKey right)
+        {
+            if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
+            {
+                return false;
+            }
+            return ReferenceEquals(left, null) || left.Equals(right);
         }
 
         public int CompareTo(object obj)
