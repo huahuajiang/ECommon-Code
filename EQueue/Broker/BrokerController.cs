@@ -1,6 +1,8 @@
 ﻿using ECommon.Logging;
 using ECommon.Scheduling;
 using ECommon.Serializing;
+using EQueue.Broker.Client;
+using EQueue.Broker.LongPolling;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +17,8 @@ namespace EQueue.Broker
         private readonly IConsumeOffsetStore _consumeOffsetStore;
         private readonly IBinarySerializer _binarySerializer;
         private readonly IScheduleService _scheduleService;
-        private readonly 
+        private readonly SuspendedPullRequestManager _suspendedPullRequestManager;
+        private readonly ProducerManager _producerManager;
+        private readonly ConsumerManager _consumerManager;
     }
 }

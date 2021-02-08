@@ -3,9 +3,6 @@ using ECommon.Logging;
 using ECommon.Serializing;
 using ECommon.Storage;
 using EQueue.Protocols.Brokers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EQueue.Broker
 {
